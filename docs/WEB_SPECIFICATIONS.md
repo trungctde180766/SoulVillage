@@ -448,3 +448,4 @@ export const CULTURAL_QUESTIONS: QuizQuestion[] = [
   }
 ];
 ```
+
