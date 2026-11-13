@@ -32,3 +32,4 @@ COPY api ./api
 EXPOSE 8080
 
 CMD ["node", "server.js"]
+

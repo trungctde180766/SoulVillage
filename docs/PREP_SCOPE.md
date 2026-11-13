@@ -53,3 +53,4 @@ Toàn bộ giá trị nghiệp vụ của sản phẩm dự thi sẽ được hi
    - Số lượng chức năng (Features/Use-cases)?
    - Hay tỷ lệ hoàn thiện giao diện (UI)?
 3. **Hành động của nhóm:** Nhóm đã chủ động gỡ bỏ 100% logic nghiệp vụ AI, 100% dữ liệu văn hóa thật, 100% logic tính điểm quiz và đưa toàn bộ API về HTTP 501. Nhóm **không tự khẳng định** bản starter này chắc chắn đạt đúng tỷ lệ 30% mà sẽ chủ động xuất trình tài liệu này cho Ban Giám khảo tại bàn kiểm tra trước giờ thi để xin xác nhận chính thức.
+
