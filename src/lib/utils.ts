@@ -9,3 +9,4 @@ export function formatMinutesToHours(minutes: number): string {
 export function classNames(...classes: (string | boolean | undefined | null)[]): string {
   return classes.filter(Boolean).join(' ');
 }
+

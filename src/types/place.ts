@@ -29,3 +29,4 @@ export interface PlaceFilterOptions {
   category?: CulturalCategory | 'all';
   searchQuery?: string;
 }
+

@@ -71,3 +71,4 @@ Khi deploy lên Vercel:
    - `MONGODB_URI`: URI từ MongoDB Atlas
    - `MONGODB_DB`: `soulvillage`
 3. Sau khi thêm biến, nhấn **Redeploy** bản build gần nhất để áp dụng biến môi trường.
+

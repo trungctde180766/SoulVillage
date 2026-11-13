@@ -29,3 +29,4 @@ export interface UserPassportProfile {
   badges: CulturalBadge[];
   savedItinerariesCount: number;
 }
+

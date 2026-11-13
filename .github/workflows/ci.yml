@@ -34,3 +34,4 @@ jobs:
           echo "Verifying serverless directory structure..."
           test -d api || (echo "API directory missing" && exit 1)
           echo "Serverless functions verified successfully."
+

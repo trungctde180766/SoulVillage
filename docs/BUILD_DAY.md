@@ -165,3 +165,4 @@
 - **Tiêu chí nghiệm thu:**
   - URL live truy cập tốt trên điện thoại ban giám khảo.
   - Nhóm trình bày tự tin, không bị vấp trong luồng demo.
+

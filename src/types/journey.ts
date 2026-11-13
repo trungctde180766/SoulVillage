@@ -29,3 +29,4 @@ export interface JourneyItinerary {
   isFallback?: boolean;
   generatedAt: string;
 }
+

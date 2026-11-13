@@ -54,3 +54,4 @@
 - [x] Đã cấu hình `.gitignore` loại trừ `.env`, `.env.local`, `node_modules/`.
 - [x] Đã thiết lập cấu trúc serverless `/api` gọi Gemini & MongoDB từ backend, không lộ key ra frontend.
 - [x] Toàn bộ thành viên nắm rõ mốc thời gian và nhiệm vụ từng milestone.
+
