@@ -26,7 +26,6 @@ RUN npm ci --omit=dev
 # Sao chép bản build frontend và server runner
 COPY --from=builder /app/dist ./dist
 COPY server.js ./
-COPY api ./api
 
 # Cloud Run tự động inject biến PORT (mặc định 8080)
 EXPOSE 8080
