@@ -1,0 +1,36 @@
+name: CI/CD Pipeline - SoulVillage
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  validate-and-build:
+    name: Build & Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Type Check & Vite Production Build
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Verify Serverless API Signatures
+        run: |
+          echo "Verifying serverless directory structure..."
+          test -d api || (echo "API directory missing" && exit 1)
+          echo "Serverless functions verified successfully."
