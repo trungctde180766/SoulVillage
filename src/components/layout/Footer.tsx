@@ -58,7 +58,7 @@ export const Footer: React.FC = () => {
                 <span>Google Gemini 2.5 Flash</span>
               </li>
               <li className="flex items-center space-x-1">
-                <span>MongoDB Atlas & Vercel</span>
+                <span>Google Cloud Run & MongoDB</span>
               </li>
               <li>
                 <a

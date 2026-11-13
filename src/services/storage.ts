@@ -1,48 +1,37 @@
 import type { UserPassportProfile } from '../types/passport';
 import type { JourneyItinerary } from '../types/journey';
 
-const PASSPORT_KEY = 'soulvillage_passport_profile';
-const ITINERARY_KEY = 'soulvillage_saved_itineraries';
+const PASSPORT_KEY = 'soulvillage_passport';
+const ITINERARY_KEY = 'soulvillage_itineraries';
+
+// TODO (Hackathon Day): Xây dựng cơ chế đồng bộ giữa localStorage và MongoDB Atlas trong thời gian thi
 
 export function getLocalPassport(): UserPassportProfile {
   try {
     const raw = localStorage.getItem(PASSPORT_KEY);
     if (raw) return JSON.parse(raw);
-  } catch (err) {
-    console.error('Error reading localStorage passport:', err);
+  } catch {
+    // fallback
   }
 
-  // Initial starter profile
-  const initialProfile: UserPassportProfile = {
-    userId: 'guest-' + Math.random().toString(36).substring(2, 9),
-    displayName: 'Lữ Khách Văn Hóa',
-    points: 150,
-    visitedPlaceIds: ['lang-huong-thuy-xuan'],
+  // Khung rỗng ban đầu, không có điểm hay huy hiệu điền sẵn
+  return {
+    userId: 'user-' + Math.random().toString(36).substring(2, 7),
+    displayName: 'Khách Tham Quan',
+    joinedAt: new Date().toISOString(),
+    points: 0,
+    visitedPlaceIds: [],
     completedQuizIds: [],
-    badges: [
-      {
-        id: 'badge-starter',
-        name: 'Hạt Mầm Di Sản',
-        description: 'Bắt đầu hành trình tìm về cội nguồn văn hóa Việt Nam.',
-        icon: '🌱',
-        category: 'explorer',
-        requirementText: 'Gia nhập Hồn Làng',
-        unlockedAt: new Date().toISOString()
-      }
-    ],
-    savedItinerariesCount: 0,
-    joinedAt: new Date().toISOString()
+    badges: [],
+    savedItinerariesCount: 0
   };
-
-  saveLocalPassport(initialProfile);
-  return initialProfile;
 }
 
 export function saveLocalPassport(profile: UserPassportProfile): void {
   try {
     localStorage.setItem(PASSPORT_KEY, JSON.stringify(profile));
-  } catch (err) {
-    console.error('Error saving localStorage passport:', err);
+  } catch {
+    // ignore
   }
 }
 
@@ -51,7 +40,7 @@ export function getLocalItineraries(): JourneyItinerary[] {
     const raw = localStorage.getItem(ITINERARY_KEY);
     if (raw) return JSON.parse(raw);
   } catch {
-    // fallback
+    // ignore
   }
   return [];
 }
@@ -59,9 +48,8 @@ export function getLocalItineraries(): JourneyItinerary[] {
 export function saveLocalItinerary(itinerary: JourneyItinerary): void {
   try {
     const current = getLocalItineraries();
-    const updated = [itinerary, ...current.filter(i => i.id !== itinerary.id)];
-    localStorage.setItem(ITINERARY_KEY, JSON.stringify(updated));
-  } catch (err) {
-    console.error('Error saving itinerary to localStorage:', err);
+    localStorage.setItem(ITINERARY_KEY, JSON.stringify([itinerary, ...current]));
+  } catch {
+    // ignore
   }
 }

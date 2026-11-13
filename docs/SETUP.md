@@ -1,104 +1,101 @@
-# Hướng dẫn Thiết Lập Môi Trường (Setup Guide) — Hồn Làng (SoulVillage)
+# Hướng Dẫn Thiết Lập Môi Trường (Setup Guide) — Hồn Làng (SoulVillage)
 
-Dự án **Hồn Làng** được xây dựng với kiến trúc hiện đại, gọn nhẹ và tối ưu hóa cho Hackathon 270 phút:
-- **Frontend:** React + Vite + TypeScript + Tailwind CSS + Lucide Icons + React Router
-- **Backend:** Vercel Serverless Functions (`/api`)
-- **Database:** MongoDB Atlas (native official `mongodb` driver với connection pooling)
-- **AI Core:** Google Gemini API (`@google/genai` official SDK)
-- **CI/CD:** GitHub Actions -> Vercel Deployment
+Tài liệu này hướng dẫn cài đặt và chạy thử nghiệm bản Starter Kit trên máy cá nhân và môi trường Google Cloud Run.
 
 ---
 
-## 1. Yêu cầu Hệ Thống
-- **Node.js:** v20+ hoặc v22+ LTS (khuyến nghị v22.x)
-- **npm:** v10+
-- **Git:** v2.40+
-- **Tài khoản cần có:**
-  - GitHub (repo: `https://github.com/trungctde180766/SoulVillage.git`)
-  - Vercel (kết nối với repo GitHub)
-  - Google AI Studio (lấy `GEMINI_API_KEY`)
-  - MongoDB Atlas (lấy `MONGODB_URI`)
+## 1. Phân Định Quy Định BTC và Lựa Chọn Của Đội
+
+### A. Quy định chính thức từ Ban Tổ Chức (Hình ảnh thể lệ)
+* **Giới hạn code chuẩn bị:** Dự án có sẵn chỉ được hoàn thiện **tối đa 30%**.
+* **Công nghệ Google bắt buộc:** Tối thiểu phải gọi **Google Gemini API** và triển khai trên **Google Cloud Run**.
+* **Quy trình nộp bài:** Dùng Git, push tiến độ liên tục và nộp mã nguồn qua GitHub repository.
+* **Tiêu chí phát triển:** Ưu tiên phát triển các tính năng cốt lõi.
+
+### B. Lựa chọn kỹ thuật nội bộ của đội
+* **Frontend:** React 19 + Vite + TypeScript + Tailwind CSS.
+* **Backend Runner:** Node.js Express Server (`server.js`) phục vụ SPA build và REST endpoints.
+* **Database:** MongoDB Atlas (tùy chọn lưu trữ cho Cultural Passport).
+* **Container:** Docker Multi-stage build phục vụ Google Cloud Run.
 
 ---
 
-## 2. Cài Đặt Ban Đầu (Local Development)
+## 2. Yêu Cầu Môi Trường Cục Bộ
+* **Node.js:** v20.x hoặc v22.x LTS (đã kiểm tra trên máy: v22.23.2).
+* **npm:** v10.x.
+* **Git:** v2.40+.
+* **Docker Desktop:** Khuyến nghị cài đặt để test container trước khi deploy Cloud Run.
+* **Google Cloud SDK (`gcloud` CLI):** Chuẩn bị sẵn để deploy lên Google Cloud Run trong ngày thi.
+
+---
+
+## 3. Cài Đặt Ban Đầu (Local Development)
 
 ```bash
-# 1. Clone repository (nếu chưa clone)
-git clone https://github.com/trungctde180766/SoulVillage.git
-cd SoulVillage
+# 1. Cài đặt các gói phụ thuộc
+npm ci
 
-# 2. Cài đặt các gói phụ thuộc
-npm install
-
-# 3. Tạo file cấu hình môi trường cục bộ
+# 2. Tạo file cấu hình môi trường cục bộ
 cp .env.example .env.local
 ```
 
----
-
-## 3. Cấu hình Biến Môi Trường (.env.local)
-
-Điền các giá trị thực tế vào file `.env.local` (file này đã nằm trong `.gitignore`):
-
+File `.env.local` (nằm trong `.gitignore`, không commit lên git):
 ```ini
-# Gemini API Key từ Google AI Studio (https://aistudio.google.com/)
-GEMINI_API_KEY="AIzaSyYourSecretGeminiApiKeyHere"
-
-# MongoDB Atlas Connection String
-MONGODB_URI="mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/?retryWrites=true&w=majority"
+GEMINI_API_KEY="AIzaSyYourSecretKeyHere"
+MONGODB_URI="mongodb+srv://user:pass@cluster0.mongodb.net/?retryWrites=true&w=majority"
 MONGODB_DB="soulvillage"
-
-# Node Environment
-NODE_ENV="development"
+PORT=8080
 ```
 
-> [!WARNING]
-> **Tuyệt đối không sử dụng tiền tố `VITE_` cho các API key bí mật!**
-> Các biến có tiền tố `VITE_` sẽ bị Vite bundle trực tiếp vào mã nguồn JavaScript gửi tới trình duyệt người dùng, làm lộ key ra ngoài. Mọi lệnh gọi Gemini và MongoDB chỉ được thực hiện trong thư mục `/api` phía serverless function.
-
 ---
 
-## 4. Chạy Dự Án Cục Bộ
+## 4. Các Chế Độ Chạy (Execution Modes)
 
+### Chế độ 1: Frontend Development Server (Vite HMR)
 ```bash
-# Khởi động Vite frontend dev server
 npm run dev
-
 # Mở trình duyệt tại: http://localhost:5173
 ```
 
-Để kiểm tra đồng thời cả Serverless API `/api` và Vite frontend bằng Vercel CLI:
+### Chế độ 2: Kiểm tra Production Server (Node.js Server phục vụ Cloud Run)
 ```bash
-# Cài Vercel CLI (nếu chưa có)
-npm i -g vercel
-
-# Chạy dev server mô phỏng môi trường Vercel đầy đủ
-vercel dev
-```
-
----
-
-## 5. Kiểm tra Build & Typecheck
-
-```bash
-# Kiểm tra TypeScript typecheck và build production
+# 1. Build frontend
 npm run build
 
-# Kiểm tra linting
-npm run lint
+# 2. Chạy server Node.js lắng nghe trên PORT=8080
+npm start
+# Mở trình duyệt tại: http://localhost:8080
+# Kiểm tra endpoint sức khỏe: http://localhost:8080/api/health
+```
+
+### Chế độ 3: Chạy thử qua Docker Container (Mô phỏng Cloud Run)
+```bash
+# 1. Build container image
+docker build -t soulvillage:latest .
+
+# 2. Chạy container
+docker run -p 8080:8080 -e PORT=8080 -e GEMINI_API_KEY="YOUR_KEY" soulvillage:latest
 ```
 
 ---
 
-## 6. Cấu hình Vercel & Deploy
+## 5. Hướng Dẫn Triển Khai Lên Google Cloud Run (Thực hiện trong giờ thi)
 
-1. Đăng nhập vào [Vercel Dashboard](https://vercel.com).
-2. Chọn **"Add New..."** -> **"Project"**.
-3. Import repository `trungctde180766/SoulVillage`.
-4. Tại mục **Environment Variables**, thêm 2 biến bắt buộc:
-   - `GEMINI_API_KEY`: Key từ Google AI Studio
-   - `MONGODB_URI`: Connection string từ MongoDB Atlas
-   - `MONGODB_DB`: `soulvillage`
-5. Nhấn **Deploy**.
+> [!NOTE]
+> Trong giai đoạn PREP, nhóm **chưa** tạo tài nguyên đám mây hay triển khai lên tài khoản Google Cloud. Các lệnh dưới đây được chuẩn bị để thực hiện trong Milestone 6 ngày thi:
 
+```bash
+# 1. Đăng nhập Google Cloud
+gcloud auth login
+
+# 2. Chọn dự án
+gcloud config set project <YOUR_GCP_PROJECT_ID>
+
+# 3. Build & Deploy trực tiếp lên Cloud Run
+gcloud run deploy soulvillage \
+  --source . \
+  --platform managed \
+  --region asia-southeast1 \
+  --allow-unauthenticated \
+  --set-env-vars GEMINI_API_KEY="<KEY>",MONGODB_URI="<URI>"
+```

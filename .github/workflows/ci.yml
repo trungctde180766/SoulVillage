@@ -1,10 +1,10 @@
-name: CI/CD Pipeline - SoulVillage
+name: CI Pipeline - SoulVillage Starter
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "codex/prep-skeleton" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "codex/prep-skeleton" ]
 
 jobs:
   validate-and-build:
@@ -22,16 +22,15 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run Type Check & Vite Production Build
         run: npm run build
         env:
           NODE_ENV: production
 
-      - name: Verify Serverless API Signatures
+      - name: Verify Cloud Run Server and Dockerfile
         run: |
-          echo "Verifying serverless directory structure..."
-          test -d api || (echo "API directory missing" && exit 1)
-          echo "Serverless functions verified successfully."
-
+          test -f server.js || (echo "server.js missing" && exit 1)
+          test -f Dockerfile || (echo "Dockerfile missing" && exit 1)
+          echo "Cloud Run container configuration verified successfully."

@@ -1,120 +1,72 @@
-# 🇻🇳 Hồn Làng (SoulVillage) — Bản Đồ Văn Hóa Sống Việt Nam
+# 🇻🇳 Hồn Làng (SoulVillage) — Starter Kit (Hackathon Skeleton)
 
 > **Sự kiện:** GDG DevFest MienTrung Hackathon 2026  
 > **Địa điểm:** Grand Tourane Hotel, Đà Nẵng | Ngày thi: 14/11/2026  
 > **Repository:** [https://github.com/trungctde180766/SoulVillage.git](https://github.com/trungctde180766/SoulVillage.git)  
-> **Trạng thái:** 🟢 PREP MODE (Starter Kit & Skeleton Ready — Sẵn sàng cho 270 phút Hackathon)
+> **Nhánh chuẩn bị:** `codex/prep-skeleton`  
+> **Trạng thái:** 🟡 Minimal Starter Kit (Bộ khung kỹ thuật tối giản — Đang chờ phát triển nghiệp vụ trong 270 phút thi đấu)
 
 ---
 
-## 🌟 Giới Thiệu Dự Án
-
-**Hồn Làng (SoulVillage)** là nền tảng ứng dụng trí tuệ nhân tạo **Google Gemini API** nhằm bảo tồn, tôn vinh và cá nhân hóa trải nghiệm khám phá các làng nghề truyền thống, di sản cung đình và văn hóa dân gian Việt Nam.
-
-Khác với các ứng dụng du lịch thương mại thuần túy, **Hồn Làng** tập trung vào **chiều sâu văn hóa**, sự kết nối với nghệ nhân bản địa và những huyền tích ngàn năm bị lãng quên. MVP đầu tiên khởi động tại **Cố đô Huế** với các địa điểm nổi tiếng: Làng nón Tây Hồ, Làng hương Thủy Xuân, Đại Nội Hoàng Thành, Chùa Thiên Mụ...
-
----
-
-## 🚀 Bộ Công Nghệ (Tech Stack)
-
-| Lớp (Layer) | Công nghệ | Mục đích |
-| :--- | :--- | :--- |
-| **Frontend** | React 19 + Vite + TypeScript + Tailwind CSS | UI tốc độ cao, responsive, tối ưu hóa thời gian phát triển |
-| **Icons & Router** | Lucide React + React Router (HashRouter) | Icon văn hóa hiện đại, điều hướng SPA không lỗi 404 |
-| **AI Engine** | Google Gemini API 2.5 Flash (`@google/genai`) | Cá nhân hóa hành trình theo thời gian, sở thích và vị trí |
-| **Backend** | Vercel Serverless Functions (`/api`) | Giữ bí mật API key, xử lý logic & validation server-side |
-| **Database** | MongoDB Atlas (Native `mongodb` Driver) | Lưu trữ tiến độ Cultural Passport, Quiz, Huy hiệu & Lịch trình |
-| **CI/CD** | GitHub Actions (`.github/workflows/ci.yml`) | Tự động hóa kiểm tra build, linting và typecheck |
-| **Hosting** | Vercel | Deploy toàn cầu, serverless CDN tốc độ cao |
+## 📌 Bối Cảnh & Quy Định Ban Tổ Chức (Hình ảnh thể lệ)
+* **Giới hạn code chuẩn bị:** Dự án có sẵn chỉ được hoàn thiện **tối đa 30%**.
+* **Yêu cầu Google bắt buộc:** Tối thiểu gọi **Google Gemini API** và triển khai trên **Google Cloud Run**.
+* **Quy trình nộp bài:** Dùng Git, commit & push tiến độ liên tục và nộp bài qua GitHub.
+* **Quy tắc minh bạch:** Xem chi tiết tại [docs/PREP_SCOPE.md](file:///c:/Users/THANH%20TRUNG/Desktop/SoulVillage/docs/PREP_SCOPE.md) về phân định phạm vi code trước/sau rút gọn.
 
 ---
 
-## 📁 Cấu Trúc Thư Mục Chuẩn Modular
+## 🔍 Trạng Thái Hiện Tại Của Starter Kit
 
-```text
-SoulVillage/
-├── .github/
-│   └── workflows/
-│       └── ci.yml               # GitHub Actions CI pipeline (Typecheck & Build)
-├── api/                         # Vercel Serverless Backend Functions
-│   ├── lib/
-│   │   ├── gemini.ts            # Khởi tạo Gemini SDK (@google/genai)
-│   │   └── mongodb.ts           # Connection pooling & caching cho MongoDB Atlas
-│   ├── itinerary.ts             # API tạo hành trình AI bằng Gemini + Fallback
-│   ├── passport.ts              # API quản lý Hộ chiếu văn hóa & Quiz (MongoDB)
-│   └── places.ts                # API danh mục địa điểm văn hóa
-├── docs/                        # Tài liệu hướng dẫn thi đấu & kỹ thuật
-│   ├── COMPETITION_RULES.md     # Quy định đạo đức thi & phân định PREP/BUILD
-│   ├── SETUP.md                 # Hướng dẫn thiết lập máy tính & cài đặt
-│   ├── BUILD_DAY.md             # Kế hoạch tác chiến 270 phút chi tiết (M1 -> M6)
-│   └── API_CHECKLIST.md         # Hướng dẫn test Gemini API & MongoDB Atlas
-├── public/                      # Static assets & favicon
-├── src/
-│   ├── components/
-│   │   ├── layout/              # Navbar, Footer, Layout
-│   │   └── ui/                  # Button, Badge, Card tái sử dụng
-│   ├── data/                    # Dữ liệu khảo sát ban đầu về Cố đô Huế
-│   ├── features/
-│   │   ├── explore/             # Khám phá di sản, FilterBar, PlaceCard, Mini-map
-│   │   ├── places/              # Trang chi tiết câu chuyện di sản & nguồn
-│   │   ├── journey/             # Lập hành trình cá nhân hóa với Gemini AI
-│   │   └── passport/            # Hộ chiếu văn hóa, Huy hiệu & Mini Quiz
-│   ├── lib/                     # Utilities & formatting
-│   ├── services/                # API client & localStorage fallback
-│   ├── types/                   # TypeScript interfaces (Place, Journey, Passport)
-│   ├── App.tsx                  # Root Routing
-│   ├── main.tsx                 # Entry Point
-│   └── index.css                # Tailwind directives & theme
-├── .env.example                 # Mẫu biến môi trường an toàn (Không chứa Secret)
-├── vercel.json                  # Cấu hình routing & serverless cho Vercel
-├── tailwind.config.js           # Bảng màu văn hóa: Xanh ngọc, Kem ấm, Cam đất
-└── package.json
-```
+### Những gì ĐÃ CÓ trong starter kit:
+* **Bộ khung giao diện:** React 19, Vite, TypeScript, Tailwind CSS (theme văn hóa Việt: Xanh ngọc bích, Kem ấm, Cam đất).
+* **Điều hướng & Trang placeholder:** Router và 4 trang khung hiển thị (`ExplorePage`, `PlaceDetailPage`, `JourneyPage`, `PassportPage`) với nhãn ghi rõ trạng thái *Chưa triển khai*.
+* **Node.js Production Server:** `server.js` lắng nghe trên `0.0.0.0` (port qua `process.env.PORT || 8080`), phục vụ frontend build và endpoint `GET /api/health` trả về HTTP 200.
+* **Cấu hình Container:** Multi-stage `Dockerfile` và `.dockerignore` sẵn sàng cho Google Cloud Run.
+* **Cấu hình & SDK:** Dependency SDK `@google/genai`, `mongodb`, `express`. Các biến môi trường an toàn dạng placeholder trong `.env.example`.
+* **CI Pipeline:** GitHub Actions kiểm tra typecheck và build frontend.
+
+### Những gì CHƯA CÓ (Bắt buộc xây dựng trong 270 phút ngày thi):
+* ❌ **Chưa có dữ liệu văn hóa thật:** Mảng dữ liệu địa điểm đang rỗng (`src/data/places.ts`).
+* ❌ **Chưa có logic Gemini AI:** Chưa có prompt, chưa có logic sinh hành trình và chưa có kết quả AI (API `/api/itinerary` đang trả về HTTP 501 Not Implemented).
+* ❌ **Chưa có logic Hộ chiếu & Quiz:** Chưa có câu hỏi trắc nghiệm, chưa có logic chấm điểm và cấp huy hiệu (API `/api/passport` trả về HTTP 501 Not Implemented).
+* ❌ **Chưa có tài nguyên Cloud Run thực tế:** Chưa tạo dịch vụ hay triển khai lên tài khoản Google Cloud của người dùng.
 
 ---
 
-## ⚡ Cài Đặt Nhanh (Quick Start)
+## 🚀 Hướng Dẫn Chạy Cục Bộ (Quick Start)
 
 ### 1. Cài đặt các gói phụ thuộc
 ```bash
-npm install
+npm ci
 ```
 
-### 2. Thiết lập Biến Môi Trường
-Sao chép `.env.example` thành `.env.local` và điền key của bạn:
+### 2. Thiết lập Biến Môi Trường (Placeholder)
 ```bash
 cp .env.example .env.local
 ```
 
-Nội dung `.env.local`:
-```ini
-GEMINI_API_KEY="AIzaSy..."
-MONGODB_URI="mongodb+srv://<user>:<pwd>@cluster0.xxxxx.mongodb.net/?retryWrites=true&w=majority"
-MONGODB_DB="soulvillage"
-```
-
-### 3. Khởi động môi trường phát triển
+### 3. Chạy môi trường Frontend Dev (Vite)
 ```bash
 npm run dev
+# Truy cập: http://localhost:5173
 ```
-Mở trình duyệt tại: `http://localhost:5173`
+
+### 4. Chạy môi trường Production Server (Google Cloud Run Server)
+```bash
+# Build frontend
+npm run build
+
+# Khởi động Node.js server
+npm start
+# Truy cập website: http://localhost:8080
+# Kiểm tra Health Check: http://localhost:8080/api/health
+```
 
 ---
 
-## 🛡️ Bảo Mật & Quy Định API
-
-- **Bảo vệ Secret:** Toàn bộ lệnh gọi Gemini API và MongoDB Atlas đều chạy thông qua backend Serverless `/api`. 
-- **Không dùng tiền tố `VITE_`:** Tuyệt đối không đặt `VITE_GEMINI_API_KEY` để tránh lộ key trên mã nguồn frontend.
-- **Tự động Fallback:** Hệ thống tích hợp sẵn fallback dữ liệu lịch trình chất lượng cao phòng khi mạng khách sạn yếu hoặc hết hạn ngạch Gemini.
-
----
-
-## ⏱️ Kế Hoạch 270 Phút Ngày Thi (Hackathon Timeline)
-
-Chi tiết đầy đủ trong [BUILD_DAY.md](file:///c:/Users/THANH%20TRUNG/Desktop/SoulVillage/docs/BUILD_DAY.md):
-- **M1 (00:00–00:10):** Kiểm tra starter, môi trường, network, phân công vai trò.
-- **M2 (00:10–01:10):** Nhập dữ liệu 8–12 địa điểm Huế, bộ lọc văn hóa, card grid.
-- **M3 (01:10–01:55):** Hoàn thiện trang Culture Story & nguồn trích dẫn lịch sử.
-- **M4 (01:55–03:00):** Tích hợp Gemini AI Journey, prompt tuning, JSON validator.
-- **M5 (03:00–03:35):** Quiz văn hóa, hệ thống huy hiệu, lưu tiến độ MongoDB.
-- **M6 (03:35–04:30):** Deploy Vercel Production, smoke test, luyện tập thuyết trình (Pitch).
+## 📂 Tài Liệu Chi Tiết Trong Thư Mục `docs/`
+* [docs/PREP_SCOPE.md](file:///c:/Users/THANH%20TRUNG/Desktop/SoulVillage/docs/PREP_SCOPE.md): Báo cáo đối chiếu phạm vi chuẩn bị trước và sau rút gọn để xuất trình cho BTC.
+* [docs/SETUP.md](file:///c:/Users/THANH%20TRUNG/Desktop/SoulVillage/docs/SETUP.md): Hướng dẫn cài đặt, chạy Docker và lệnh deploy Cloud Run.
+* [docs/BUILD_DAY.md](file:///c:/Users/THANH%20TRUNG/Desktop/SoulVillage/docs/BUILD_DAY.md): Kế hoạch tác chiến 270 phút chi tiết theo từng Milestone (M1 – M6).
+* [docs/COMPETITION_RULES.md](file:///c:/Users/THANH%20TRUNG/Desktop/SoulVillage/docs/COMPETITION_RULES.md): Đối chiếu các quy định thể lệ thi đấu.

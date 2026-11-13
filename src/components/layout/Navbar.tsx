@@ -32,8 +32,8 @@ export const Navbar: React.FC = () => {
                 <span className="font-serif font-bold text-xl tracking-wide text-primary-950">
                   Hồn Làng
                 </span>
-                <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 bg-ochre-100 text-ochre-800 font-semibold rounded">
-                  Hue MVP
+                <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 bg-stone-100 text-stone-600 font-semibold rounded">
+                  Starter
                 </span>
               </div>
               <p className="text-[11px] text-stone-500 font-medium hidden sm:block">
@@ -65,11 +65,11 @@ export const Navbar: React.FC = () => {
               );
             })}
 
-            {/* Preparation / Hackathon Badge */}
+            {/* Preparation / Starter Indicator */}
             <div className="pl-3 border-l border-stone-200">
-              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse" />
-                DevFest 2026 Ready
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200">
+                <span className="w-2 h-2 rounded-full bg-amber-500 mr-1.5" />
+                Prep Skeleton
               </span>
             </div>
           </div>

@@ -1,77 +1,51 @@
 import type { JourneyItinerary, JourneyPreference } from '../types/journey';
 import type { UserPassportProfile } from '../types/passport';
 import type { CulturalPlace } from '../types/place';
-import { SAMPLE_CULTURAL_PLACES } from '../data/places';
+import { PLACES } from '../data/places';
 import { getLocalPassport } from './storage';
 
-export async function fetchCulturalPlaces(category?: string, search?: string): Promise<CulturalPlace[]> {
-  try {
-    const params = new URLSearchParams();
-    if (category && category !== 'all') params.append('category', category);
-    if (search) params.append('search', search);
+// TODO (Hackathon Day): Kết nối API serverless hoàn chỉnh trong thời gian thi
 
-    const res = await fetch(`/api/places?${params.toString()}`);
+export async function fetchCulturalPlaces(_category?: string, _search?: string): Promise<CulturalPlace[]> {
+  try {
+    const res = await fetch('/api/places');
     if (res.ok) {
       const data = await res.json();
-      if (data.places && data.places.length > 0) {
-        return data.places;
-      }
+      return data.places || [];
     }
   } catch {
-    console.info('Using local sample places fallback.');
+    // API chưa triển khai (501)
   }
-
-  // Local fallback filtering
-  let result = SAMPLE_CULTURAL_PLACES;
-  if (category && category !== 'all') {
-    result = result.filter(p => p.category === category);
-  }
-  if (search) {
-    const q = search.toLowerCase();
-    result = result.filter(p => 
-      p.vietnameseName.toLowerCase().includes(q) ||
-      p.shortDescription.toLowerCase().includes(q) ||
-      p.tags.some(t => t.toLowerCase().includes(q))
-    );
-  }
-  return result;
+  return PLACES;
 }
 
-export async function generateAIJourney(preference: JourneyPreference): Promise<JourneyItinerary> {
+export async function generateAIJourney(_preference: JourneyPreference): Promise<JourneyItinerary> {
   const res = await fetch('/api/itinerary', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(preference)
+    body: JSON.stringify(_preference)
   });
 
   if (!res.ok) {
-    throw new Error(`Failed to generate itinerary: ${res.statusText}`);
+    const errData = await res.json().catch(() => ({}));
+    throw new Error(errData.message || `API trả về mã lỗi ${res.status}`);
   }
 
   return await res.json();
 }
 
-export async function fetchPassportProfile(userId: string): Promise<UserPassportProfile> {
+export async function fetchPassportProfile(_userId: string): Promise<UserPassportProfile> {
   try {
-    const res = await fetch(`/api/passport?userId=${encodeURIComponent(userId)}`);
+    const res = await fetch(`/api/passport?userId=${encodeURIComponent(_userId)}`);
     if (res.ok) {
       return await res.json();
     }
-  } catch (err) {
-    console.warn('API passport fetch failed, using local storage:', err);
+  } catch {
+    // fallback
   }
-  // Fallback to local storage if API call fails
   return getLocalPassport();
 }
 
-export async function updatePassportPoints(userId: string, pointsToAdd: number, quizId?: string): Promise<void> {
-  try {
-    await fetch('/api/passport', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, pointsToAdd, quizId })
-    });
-  } catch (err) {
-    console.warn('Could not sync points with MongoDB serverless API:', err);
-  }
+export async function updatePassportPoints(_userId: string, _pointsToAdd: number, _quizId?: string): Promise<void> {
+  // TODO (Hackathon Day): Đồng bộ điểm số lên database trong thời gian thi
 }
