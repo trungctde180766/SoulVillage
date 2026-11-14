@@ -27,7 +27,7 @@ import {
   TagBadge,
 } from '../../components/shared';
 import { FALLBACK_PLACE_IMAGE_URL, getPlaceById } from '../../data/places';
-import { useTranslations, type SupportedLocale } from '../../lib/i18n';
+import { useLocale, useTranslations, type SupportedLocale } from '../../lib/i18n';
 import { loadSavedJourneys } from '../../services/journeyStorage';
 import {
   CULTURAL_REWARDS_CATALOG,
@@ -101,8 +101,14 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
   onSelectPlace,
   onNavigateJourney,
 }) => {
-  const [userSelectedLocale, setUserSelectedLocale] = useState<SupportedLocale | null>(null);
-  const activeLocale: SupportedLocale = userSelectedLocale ?? propLocale ?? 'vi';
+  const { locale: contextLocale, setLocale: setContextLocale } = useLocale();
+  const [localFallbackLocale, setLocalFallbackLocale] = useState<SupportedLocale | null>(null);
+  const activeLocale: SupportedLocale = propLocale ?? contextLocale ?? localFallbackLocale ?? 'vi';
+
+  const handleSwitchLocale = (next: SupportedLocale) => {
+    setLocalFallbackLocale(next);
+    setContextLocale(next);
+  };
 
   const t = useTranslations(activeLocale);
   const questions = useMemo(() => getLocalizedQuestions(activeLocale), [activeLocale]);
@@ -283,13 +289,23 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
     setConfirmingReset(false);
   };
 
+  const handleOpenPlace = (placeId: string) => {
+    if (onSelectPlace) {
+      onSelectPlace(placeId);
+      return;
+    }
+    if (typeof window !== 'undefined') {
+      window.location.hash = `#/places/${encodeURIComponent(placeId)}`;
+    }
+  };
+
   const handleGoToJourney = () => {
     if (onNavigateJourney) {
       onNavigateJourney();
       return;
     }
-    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/passport')) {
-      window.location.href = '/journey';
+    if (typeof window !== 'undefined') {
+      window.location.hash = '#/journey';
       return;
     }
     setShowJourneyHint(true);
@@ -299,11 +315,12 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
 
   return (
     <div className="min-h-screen bg-parchment text-ink pb-24 font-body overflow-x-hidden">
-      {/* Editorial Charcoal Page Header */}
+      {/* Editorial Charcoal Page Header (pt-28 sm:pt-32 clears fixed Navbar) */}
       <PageHeader
         label={t.passport.sectionLabel}
         title={t.passport.title}
         subtitle={t.passport.subtitle}
+        className="pt-28 sm:pt-32"
       >
         <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
           <div className="flex flex-wrap items-center gap-2.5">
@@ -327,7 +344,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
             </span>
             <button
               type="button"
-              onClick={() => setUserSelectedLocale('vi')}
+              onClick={() => handleSwitchLocale('vi')}
               className={`min-h-[36px] min-w-[44px] px-2.5 rounded-xs font-body text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors duration-300 ${
                 activeLocale === 'vi'
                   ? 'bg-gold text-charcoal'
@@ -338,7 +355,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
             </button>
             <button
               type="button"
-              onClick={() => setUserSelectedLocale('en')}
+              onClick={() => handleSwitchLocale('en')}
               className={`min-h-[36px] min-w-[44px] px-2.5 rounded-xs font-body text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors duration-300 ${
                 activeLocale === 'en'
                   ? 'bg-gold text-charcoal'
@@ -669,7 +686,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
                   meta={currentSceneMeta}
                   locale={activeLocale}
                   isAnswered={answered}
-                  onSelectPlace={onSelectPlace}
+                  onSelectPlace={handleOpenPlace}
                 />
 
                 {/* Asymmetric Question Heading with Lining Numeral */}
@@ -1040,12 +1057,8 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
                 {decodedPlaces.map((place) => (
                   <article
                     key={place.id}
-                    onClick={() => onSelectPlace?.(place.id)}
-                    className={`group bg-parchment border border-stone rounded-sm overflow-hidden flex items-center gap-3 p-2.5 ${
-                      onSelectPlace
-                        ? 'cursor-pointer hover:border-bronze transition-colors duration-300'
-                        : ''
-                    }`}
+                    onClick={() => handleOpenPlace(place.id)}
+                    className="group bg-parchment border border-stone rounded-sm overflow-hidden flex items-center gap-3 p-2.5 cursor-pointer hover:border-bronze transition-colors duration-300"
                   >
                     <div className="w-16 aspect-[4/3] shrink-0 overflow-hidden rounded-xs bg-cream border border-stone/60">
                       <img

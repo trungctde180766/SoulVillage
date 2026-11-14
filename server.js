@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { createAuthRouter } from './server/features/auth/router.js';
 import { getPlaces, createCatalogRouter } from './server/features/catalog/router.js';
 import { createJourneyRouter } from './server/features/journey/router.js';
 
@@ -11,6 +12,7 @@ const app = express();
 const PORT = parseInt(process.env.PORT || '8080', 10);
 const HOST = '0.0.0.0';
 
+app.disable('x-powered-by');
 app.use(express.json({ limit: '1mb' }));
 
 // Middleware xử lý lỗi cú pháp JSON payload gửi lên (trả về JSON 400 thay vì HTML stack trace)
@@ -35,7 +37,8 @@ app.get('/api/health', (_req, res) => {
   });
 });
 
-// 2. Mount modular feature routers (Contract v1)
+// 2. Mount modular feature routers (Contract v1 + Authentication)
+app.use('/api/auth', createAuthRouter());
 app.use('/api/places', createCatalogRouter());
 app.use('/api/itinerary', createJourneyRouter({ getPlaces }));
 
@@ -60,16 +63,31 @@ app.use('/api', (_req, res) => {
   });
 });
 
-// 4. Serve static built frontend từ thư mục dist
+// 4. Serve static built frontend từ thư mục dist và dữ liệu tĩnh từ public
 const distPath = path.join(__dirname, 'dist');
+const publicPath = path.join(__dirname, 'public');
 app.use(express.static(distPath));
+app.use(express.static(publicPath));
 
-// 5. SPA Fallback cho các router phía frontend
-app.use((_req, res) => {
+// 5. SPA Fallback chỉ phục vụ các yêu cầu trang HTML hợp lệ (GET / HEAD)
+app.use((req, res) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    return res.status(404).json({
+      error: {
+        code: 'NOT_FOUND',
+        message: 'Resource Not Found'
+      }
+    });
+  }
+
   const indexPath = path.join(distPath, 'index.html');
   res.sendFile(indexPath, (err) => {
     if (err) {
-      res.status(500).send('Frontend bundle chưa được build. Vui lòng chạy npm run build trước khi khởi động production server.');
+      res
+        .status(500)
+        .send(
+          'Frontend bundle chưa được build. Vui lòng chạy npm run build trước khi khởi động production server.'
+        );
     }
   });
 });
