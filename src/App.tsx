@@ -1,91 +1,181 @@
-import React from 'react';
-import { Compass, Sparkles, Terminal } from 'lucide-react';
-import { SectionLabel, OrnamentDivider, TagBadge } from './components/shared';
-import { useTranslations } from './lib/i18n';
+import React, { useEffect } from 'react';
+import {
+  HashRouter,
+  Navigate,
+  Route,
+  Routes,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
+import { ArrowLeft, Award, Sparkles } from 'lucide-react';
+import { AuthProvider } from './lib/auth';
+import { LocaleProvider, useTranslations } from './lib/i18n';
+import { Layout } from './components/layout';
+import { AuthPage } from './components/auth/AuthPage';
+import { Button, PageHeader, SectionLabel, TagBadge } from './components/shared';
+import { ExplorePage } from './features/explore/ExplorePage';
+import { PlaceDetailPage } from './features/places/PlaceDetailPage';
 
-export const App: React.FC = () => {
-  const t = useTranslations('vi');
+type DynamicPageModule = {
+  default?: React.ComponentType;
+  JourneyPage?: React.ComponentType;
+  PassportPage?: React.ComponentType;
+};
+
+// Tự động kết nối JourneyPage (TV2) và PassportPage (TV3) ngay khi nhánh được merge mà không vi phạm allowlist file của TV1
+const journeyModules = import.meta.glob<DynamicPageModule>(
+  './features/journey/JourneyPage.tsx',
+  { eager: true }
+);
+const passportModules = import.meta.glob<DynamicPageModule>(
+  './features/passport/PassportPage.tsx',
+  { eager: true }
+);
+
+const ResolvedJourneyPage: React.ComponentType | null = (() => {
+  const mod = Object.values(journeyModules)[0];
+  return mod?.JourneyPage || mod?.default || null;
+})();
+
+const ResolvedPassportPage: React.ComponentType | null = (() => {
+  const mod = Object.values(passportModules)[0];
+  return mod?.PassportPage || mod?.default || null;
+})();
+
+const JourneyIntegrationView: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const t = useTranslations();
+  const selectedPlaceId = searchParams.get('placeId');
+
+  if (ResolvedJourneyPage) {
+    return <ResolvedJourneyPage />;
+  }
 
   return (
-    <div className="min-h-screen bg-parchment text-ink flex flex-col justify-between font-body selection:bg-gold/20 selection:text-charcoal">
-      {/* Header */}
-      <header className="border-b border-stone bg-parchment/92 backdrop-blur-md sticky top-0 z-40">
-        <div className="max-w-content mx-auto px-5 sm:px-10 h-18 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-sm bg-charcoal border border-stone flex items-center justify-center text-gold">
-              <Compass className="w-4 h-4 text-gold" />
-            </div>
-            <div className="flex items-center gap-2.5">
-              <span className="font-display font-semibold text-2xl text-charcoal tracking-tight">
-                {t.brand.name}
+    <div className="min-h-screen bg-parchment text-ink pb-24">
+      <PageHeader
+        label={t.journey.sectionLabel}
+        title={t.journey.title}
+        subtitle={t.journey.subtitle}
+        className="pt-28 sm:pt-32"
+      />
+      <div className="max-w-content mx-auto px-5 sm:px-10 py-14">
+        <div className="max-w-2xl mx-auto p-8 bg-cream border border-stone rounded-sm space-y-6">
+          <div className="flex items-center justify-between">
+            <SectionLabel>{t.journey.sectionLabel}</SectionLabel>
+            <Sparkles className="w-5 h-5 text-gold" />
+          </div>
+
+          <h2 className="font-display text-display-md text-charcoal">
+            {t.journey.standbyTitle}
+          </h2>
+
+          {selectedPlaceId && (
+            <div className="p-4 bg-parchment border border-gold/50 rounded-sm flex flex-wrap items-center justify-between gap-2">
+              <span className="font-body text-body-sm text-ink">
+                {t.journey.selectedPlaceBanner}
               </span>
-              <TagBadge variant="gold">HoaLang v1.0</TagBadge>
+              <TagBadge variant="gold">{selectedPlaceId}</TagBadge>
             </div>
-          </div>
-          <div className="flex items-center space-x-2">
-            <TagBadge variant="stone">{t.brand.starterBadge}</TagBadge>
-          </div>
-        </div>
-      </header>
+          )}
 
-      {/* Main Starter Hero & Team Tasks Matrix */}
-      <main className="max-w-content mx-auto px-5 sm:px-10 py-16 text-center space-y-10 flex-grow flex flex-col justify-center">
-        <div className="space-y-4 max-w-3xl mx-auto">
-          <div className="flex justify-center">
-            <SectionLabel>{t.starter.sectionLabel}</SectionLabel>
-          </div>
-          <h1 className="font-display text-display-xl text-charcoal tracking-tight">
-            {t.starter.heroTitle}
-          </h1>
-          <p className="font-body text-body-lg text-ink/85">
-            {t.starter.heroSubtitle}
+          <p className="font-body text-body-md text-ash leading-relaxed">
+            {t.journey.standbyDesc}
           </p>
+
+          <div className="pt-2">
+            <Button variant="primary" onClick={() => navigate('/')}>
+              <span className="inline-flex items-center gap-2">
+                <ArrowLeft className="w-4 h-4" />
+                <span>{t.journey.backExploreCta}</span>
+              </span>
+            </Button>
+          </div>
         </div>
-
-        <OrnamentDivider />
-
-        {/* 3 Member Task Assignment Overview (Asymmetric Editorial Grid: 5 / 4 / 3 cols on lg) */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 text-left">
-          <article className="md:col-span-5 p-6 rounded-sm bg-cream border border-stone transition-transform transition-shadow duration-300 ease-out-expo hover:-translate-y-[5px] hover:shadow-hover space-y-3">
-            <div className="flex items-center justify-between">
-              <TagBadge variant="lacquer">{t.starter.tv1Label}</TagBadge>
-              <Compass className="w-4 h-4 text-gold" />
-            </div>
-            <h2 className="font-display text-display-md text-charcoal">{t.starter.tv1Title}</h2>
-            <p className="font-body text-body-sm text-ash">{t.starter.tv1Desc}</p>
-          </article>
-
-          <article className="md:col-span-4 p-6 rounded-sm bg-cream border border-stone transition-transform transition-shadow duration-300 ease-out-expo hover:-translate-y-[5px] hover:shadow-hover space-y-3">
-            <div className="flex items-center justify-between">
-              <TagBadge variant="gold">{t.starter.tv2Label}</TagBadge>
-              <Sparkles className="w-4 h-4 text-gold" />
-            </div>
-            <h2 className="font-display text-display-md text-charcoal">{t.starter.tv2Title}</h2>
-            <p className="font-body text-body-sm text-ash">{t.starter.tv2Desc}</p>
-          </article>
-
-          <article className="md:col-span-3 p-6 rounded-sm bg-cream border border-stone transition-transform transition-shadow duration-300 ease-out-expo hover:-translate-y-[5px] hover:shadow-hover space-y-3">
-            <div className="flex items-center justify-between">
-              <TagBadge variant="stone">{t.starter.tv3Label}</TagBadge>
-            </div>
-            <h2 className="font-display text-display-md text-charcoal">{t.starter.tv3Title}</h2>
-            <p className="font-body text-body-sm text-ash">{t.starter.tv3Desc}</p>
-          </article>
-        </div>
-
-        {/* Quick Instructions & Documentation Note */}
-        <div className="p-4 rounded-sm bg-cream border border-stone text-caption text-ash max-w-2xl mx-auto flex items-center justify-center space-x-2.5">
-          <Terminal className="w-4 h-4 text-gold shrink-0" />
-          <span>{t.starter.contractNote}</span>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-stone/30 bg-charcoal py-8 text-center text-caption text-cream/80 space-y-1">
-        <p>{t.footer.copyright}</p>
-        <p className="text-[11px] uppercase tracking-[0.15em] text-gold">{t.footer.motto}</p>
-      </footer>
+      </div>
     </div>
+  );
+};
+
+const PassportIntegrationView: React.FC = () => {
+  const navigate = useNavigate();
+  const t = useTranslations();
+
+  if (ResolvedPassportPage) {
+    return <ResolvedPassportPage />;
+  }
+
+  return (
+    <div className="min-h-screen bg-parchment text-ink pb-24">
+      <PageHeader
+        label={t.passport.sectionLabel}
+        title={t.passport.title}
+        subtitle={t.passport.subtitle}
+        className="pt-28 sm:pt-32"
+      />
+      <div className="max-w-content mx-auto px-5 sm:px-10 py-14">
+        <div className="max-w-2xl mx-auto p-8 bg-cream border border-stone rounded-sm space-y-6">
+          <div className="flex items-center justify-between">
+            <SectionLabel>{t.passport.sectionLabel}</SectionLabel>
+            <Award className="w-5 h-5 text-gold" />
+          </div>
+
+          <h2 className="font-display text-display-md text-charcoal">
+            {t.passport.standbyTitle}
+          </h2>
+
+          <p className="font-body text-body-md text-ash leading-relaxed">
+            {t.passport.standbyDesc}
+          </p>
+
+          <div className="pt-2">
+            <Button variant="primary" onClick={() => navigate('/')}>
+              <span className="inline-flex items-center gap-2">
+                <ArrowLeft className="w-4 h-4" />
+                <span>{t.passport.backExploreCta}</span>
+              </span>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const App: React.FC = () => {
+  useEffect(() => {
+    // Nếu người dùng mở trực tiếp pathname như /places/id hoặc /journey?placeId=id (không có #), đồng bộ sang HashRouter
+    if (
+      typeof window !== 'undefined' &&
+      window.location.pathname !== '/' &&
+      !window.location.hash
+    ) {
+      const targetHash = `#${window.location.pathname}${window.location.search}`;
+      window.history.replaceState(null, '', `/${targetHash}`);
+    }
+  }, []);
+
+  return (
+    <LocaleProvider>
+      <AuthProvider>
+        <HashRouter>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<ExplorePage />} />
+              <Route path="/places/:placeId" element={<PlaceDetailPage />} />
+              <Route path="/place/:placeId" element={<PlaceDetailPage />} />
+              <Route path="/journey" element={<JourneyIntegrationView />} />
+              <Route path="/passport" element={<PassportIntegrationView />} />
+              <Route path="/auth" element={<AuthPage />} />
+              <Route path="/login" element={<AuthPage />} />
+              <Route path="/register" element={<AuthPage />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Layout>
+        </HashRouter>
+      </AuthProvider>
+    </LocaleProvider>
   );
 };
 
