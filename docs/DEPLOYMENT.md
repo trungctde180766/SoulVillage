@@ -11,9 +11,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/deploy-cloud-run.ps1
 
 Script yêu cầu Google Cloud CLI đã đăng nhập tài khoản có quyền trên project. Nó hỗ trợ bản CLI portable tại `%LOCALAPPDATA%/SoulVillageTools/google-cloud-sdk/bin/gcloud.cmd`.
 
-**Giới hạn hiện tại (chờ tích hợp TV2 & TV3):** danh mục backend (`/api/places`) và hành trình Gemini (`/api/itinerary`) vẫn là stub trả HTTP 501 (frontend Khám Phá vẫn hiển thị mượt dữ liệu tĩnh từ `public/data/`); Hộ chiếu/Quiz thuộc nhánh của TV3. Tài khoản xác thực hiện lưu trong RAM của instance (`max-instances=1`), token ký bằng khóa bí mật từ Secret Manager (`soulvillage-auth-token-secret`).
-
-Các mục dưới đây là hướng dẫn tích hợp đầy đủ khi các module sẵn sàng; không phải bằng chứng đã triển khai hoặc đã gọi Gemini thành công.
+**Trạng thái hiện tại (Đã hợp nhất TV1 + TV2 + TV3):** Đầy đủ danh mục 11 làng nghề & di tích Huế (`/api/places` trả `200 OK`), khởi tạo hành trình AI trực tiếp với Google Gemini (`/api/itinerary` trả `200 OK`, `isFallback: false`), Hộ chiếu văn hóa & Quiz tương tác (`/#/passport`), cùng xác thực tài khoản ký bằng khóa bí mật từ Google Secret Manager (`soulvillage-auth-token-secret`, `soulvillage-gemini-key`, `soulvillage-mongodb-uri`).
 
 **Dự án:** SoulVillage × HoaLang  
 **Người phụ trách triển khai duy nhất:** TV1 (Trưởng nhóm)  
@@ -114,11 +112,11 @@ gcloud run services describe soulvillage `
 | :--- | :--- |
 | **GCP Project / Region** | `booca-471111` / `asia-southeast1` |
 | **START_SHA (Baseline)** | `288ccc2e915a9c4bb4e8ce23642555562b0f8bdf` |
-| **Commit nền gần nhất** | `376d08c6de2eacb03ff1a5ff27ece6e4935724b9` (+ bản cập nhật Auth UI & script deploy) |
+| **Commit SHA triển khai** | `9dc73b818a71590b3b2be5987864a61e07ab5594` |
 | **Cloud Run Service URL** | https://soulvillage-nwhb5clvtq-as.a.run.app (và https://soulvillage-279315268039.asia-southeast1.run.app) |
-| **Cloud Run Revision** | `soulvillage-00001-nlh` |
+| **Cloud Run Revision** | `soulvillage-00002-8cz` |
 | **Kiểm tra `/api/health`** | `200 OK` (`{"status":"ok","service":"soulvillage"}`) |
-| **Kiểm tra SPA (`/` & `/auth`)** | `200 OK` |
-| **Kiểm tra `/api/places`** | Chờ merge nhánh TV3 (hiện stub `501`, UI dùng fallback tĩnh `public/data/`) |
-| **Kiểm tra `POST /api/itinerary` (Gemini thật)** | Chờ merge nhánh TV2 (hiện stub `501`) |
+| **Kiểm tra SPA (`/` · `/#/journey` · `/#/passport` · `/#/auth`)** | `200 OK` |
+| **Kiểm tra `/api/places`** | `200 OK` (`total: 11` địa điểm làng nghề & di tích Cố đô Huế) |
+| **Kiểm tra `POST /api/itinerary` (Gemini thật)** | `200 OK` (`isFallback: false` — tạo lộ trình trực tiếp bằng Gemini) |
 | **Kiểm tra Mobile 390px** | Đạt 15/15 tiêu chí HoaLang UI Rule v1.0 |
