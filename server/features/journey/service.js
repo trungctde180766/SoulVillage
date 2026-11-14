@@ -149,10 +149,14 @@ export async function defaultCallGeminiText({
   timeoutMs = DEFAULT_TIMEOUT_MS,
 }) {
   const ai = new GoogleGenAI({ apiKey });
-  const candidateModels =
-    typeof modelName === 'string' && modelName.trim()
-      ? [modelName.trim()]
-      : FALLBACK_GEMINI_MODELS;
+  const explicitModel =
+    typeof modelName === 'string' && modelName.trim() ? modelName.trim() : null;
+  const candidateModels = explicitModel
+    ? [
+        explicitModel,
+        ...FALLBACK_GEMINI_MODELS.filter((m) => m !== explicitModel),
+      ]
+    : FALLBACK_GEMINI_MODELS;
 
   let lastErr;
   for (const model of candidateModels) {
