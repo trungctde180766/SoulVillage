@@ -77,7 +77,7 @@ export const JourneyForm: React.FC<JourneyFormProps> = ({
   const handleQuickLogin = async () => {
     setAuthLoading(true);
     try {
-      await login({ email: 'tv2@hoalang.vn', password: 'hoalang2026' });
+      await login({ email: 'tv2@soulvillage.vn', password: 'hoalang2026' });
     } finally {
       setAuthLoading(false);
     }
