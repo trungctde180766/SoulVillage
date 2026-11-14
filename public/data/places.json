@@ -1,1 +1,431 @@
-[]
+[
+  {
+    "id": "lang-non-tay-ho",
+    "name": "Tay Ho Conical Hat Village",
+    "vietnameseName": "Làng Nón Tây Hồ",
+    "category": "craft",
+    "categoryLabel": "Làng Nghề Thủ Công",
+    "location": "Xã Phú Hồ, Huyện Phú Vang, Thừa Thiên Huế",
+    "coordinates": {
+      "lat": 16.4419,
+      "lng": 107.6492
+    },
+    "shortDescription": "Cái nôi của chiếc nón bài thơ xứ Huế thanh tao, kết tinh từ 15 công đoạn thủ công tỉ mỉ và nghệ thuật lồng thơ ẩn hiện dưới ánh nắng.",
+    "story": "Nằm bên dòng sông Như Ý hiền hòa cách trung tâm thành phố Huế khoảng 12km, làng Tây Hồ đã gắn bó với nghề chằm nón qua hàng trăm năm lịch sử. Khoảng cuối thập niên 1950 – đầu 1960, nghệ nhân Bùi Quang Bặc cùng những người thợ tài hoa trong làng đã nảy ra sáng kiến ép những vần thơ lục bát và hình bóng cầu Trường Tiền, chùa Thiên Mụ vào giữa hai lớp lá nón mỏng mảnh, khai sinh ra dòng 'nón bài thơ' trở thành biểu tượng văn hóa dịu dàng của người con gái Cố đô.",
+    "craftDetails": "Để hoàn thiện một chiếc nón bài thơ đạt chuẩn thanh mảnh nhưng bền chắc, người nghệ nhân phải trải qua 15 công đoạn nghiêm ngặt: chọn lá nón non từ rừng Nam Đông, sấy lá, phơi sương, ủi phẳng bằng lưỡi cày gang ấm, chuốt 16 vành tre cật vót tròn đều như sợi tơ, lồng họa tiết hoa văn và câu thơ đối xứng trước khi chằm từng mũi cước trong suốt đều tăm tắp.",
+    "historicalSignificance": "Nghề làm nón lá ở Tây Hồ hình thành từ hàng thế kỷ trước và đạt đỉnh cao nghệ thuật thủ công vào thế kỷ XX khi nón bài thơ trở thành tặng phẩm văn hóa đặc trưng của vùng đất Thuận Hóa – Phú Xuân.",
+    "localTips": [
+      "Ghé thăm làng vào khoảng 7:30 – 10:00 sáng để ngắm những sân phơi lá nón trắng ngà trải dọc bên bờ sông Như Ý.",
+      "Trải nghiệm tự tay xếp lá, cài hoa văn giấy dó và thử chằm những mũi cước đầu tiên dưới sự chỉ dẫn của các mệ, các o cao niên.",
+      "Chọn mua nón bài thơ chính gốc bằng cách đưa nón hướng lên ánh nắng tự nhiên để kiểm tra độ trong đều của hai lớp lá và nét cắt bài thơ."
+    ],
+    "imageUrl": "/images/places/lang-non-tay-ho.jpg",
+    "tags": [
+      "Nón lá",
+      "Nón bài thơ",
+      "Thủ công",
+      "Sông Như Ý"
+    ],
+    "estimatedVisitTimeMinutes": 90,
+    "sources": [
+      {
+        "title": "Cổng thông tin điện tử tỉnh Thừa Thiên Huế — Làng nghề truyền thống Nón lá Tây Hồ",
+        "url": "https://thuathienhue.gov.vn"
+      },
+      {
+        "title": "Sở Du lịch Thừa Thiên Huế — Cẩm nang Làng nghề Cố đô",
+        "url": "https://visithue.vn"
+      }
+    ]
+  },
+  {
+    "id": "lang-huong-thuy-xuan",
+    "name": "Thuy Xuan Incense Village",
+    "vietnameseName": "Làng Hương Thủy Xuân",
+    "category": "craft",
+    "categoryLabel": "Làng Nghề Thủ Công",
+    "location": "Đường Huyền Trân Công Chúa, Phường Thủy Xuân, TP. Huế",
+    "coordinates": {
+      "lat": 16.4358,
+      "lng": 107.5683
+    },
+    "shortDescription": "Không gian rực rỡ sắc màu của những bó chân hương xòe hoa dưới chân đồi Vọng Cảnh, lưu giữ hương trầm thảo mộc hơn 700 năm.",
+    "story": "Tọa lạc trên cung đường cổ kính dẫn về lăng Tự Đức và đồi Vọng Cảnh, làng hương Thủy Xuân đã tồn tại hơn bảy thế kỷ từ thời các chúa Nguyễn mở cõi Đàng Trong. Xưa kia, đây là làng nghề chuyên cung tiến hương trầm thượng hạng cho triều đình, các bậc vương công và hệ thống cổ tự khắp vùng Thuận Hóa – Quảng Nam.",
+    "craftDetails": "Điểm cốt lõi làm nên phẩm chất hương Thủy Xuân là công thức phối trộn hoàn toàn từ thảo mộc tự nhiên: bột trầm hương, quế chi, đại hồi, thảo quả, đinh hương, nụ tùng và vỏ bưởi rừng, kết dính bằng bột keo vỏ cây bời lời mà tuyệt đối không dùng hóa chất tạo mùi. Chân hương được chẻ từ ruột tre già phơi khô giòn, nhuộm sắc đỏ son, vàng nghệ, lục lam rồi xòe tròn như những đóa hoa dưới nắng.",
+    "historicalSignificance": "Nghề làm hương truyền thống Thủy Xuân đã được Bộ Văn hóa, Thể thao và Du lịch ghi danh vào Danh mục Di sản Văn hóa Phi vật thể Quốc gia, khẳng định giá trị tâm linh và kỹ nghệ bản địa lâu đời của Cố đô.",
+    "localTips": [
+      "Thời điểm lý tưởng nhất để thưởng lãm và ghi hình là buổi sáng nắng đẹp từ 8:30 – 11:00 khi hàng ngàn bó chân hương được phơi bung rực rỡ.",
+      "Thử tự tay lăn bột hương trên thanh tre cùng nghệ nhân để cảm nhận độ dẻo của vỏ cây bời lời và mùi thơm thanh khiết của thảo mộc.",
+      "Thưởng thức một chén trà sen ấm và đốt thử nụ trầm hương thủ công tại các hiên nhà gỗ dọc đường Huyền Trân Công Chúa."
+    ],
+    "imageUrl": "/images/places/lang-huong-thuy-xuan.jpg",
+    "tags": [
+      "Làng hương",
+      "Thảo mộc",
+      "Trầm hương",
+      "Di sản phi vật thể"
+    ],
+    "estimatedVisitTimeMinutes": 75,
+    "sources": [
+      {
+        "title": "Sở Du lịch Thừa Thiên Huế — Làng hương Thủy Xuân 700 năm tuổi",
+        "url": "https://visithue.vn"
+      },
+      {
+        "title": "Cục Di sản Văn hóa — Danh mục Di sản Văn hóa Phi vật thể Quốc gia",
+        "url": "http://dsvh.gov.vn"
+      }
+    ]
+  },
+  {
+    "id": "lang-gom-phuoc-tich",
+    "name": "Phuoc Tich Ancient Pottery Village",
+    "vietnameseName": "Làng Cổ & Gốm Phước Tích",
+    "category": "craft",
+    "categoryLabel": "Làng Nghề Thủ Công",
+    "location": "Xã Phong Hòa, Huyện Phong Điền, Thừa Thiên Huế",
+    "coordinates": {
+      "lat": 16.6524,
+      "lng": 107.3091
+    },
+    "shortDescription": "Ngôi làng cổ hơn 500 năm được bao bọc bởi dòng sông Ô Lâu, nổi danh với dòng gốm mộc nung củi đanh chắc từng tiến vua triều Nguyễn.",
+    "story": "Được thành lập từ năm 1470 dưới thời vua Lê Thánh Tông với tên gọi ban đầu là Kẻ Đôộc, làng cổ Phước Tích nằm yên bình như một bán đảo xanh mướt được dòng sông Ô Lâu ôm trọn ba mặt. Cùng với quần thể hơn 20 ngôi nhà rường cổ nguyên bản có tuổi đời hàng trăm năm và những hàng chè tàu cắt tỉa thẳng tắp, lò gốm Phước Tích đã tạo nên những sản phẩm gốm mộc tinh xảo từng được chọn làm đồ ngự dụng trong Hoàng cung Huế.",
+    "craftDetails": "Gốm Phước Tích sử dụng nguồn đất sét mịn khai thác từ vùng sông Ô Lâu, nhào luyện kỹ và tạo hình hoàn toàn bằng bàn xoay thủ công. Sản phẩm không tráng men hóa học mà nung liên tục nhiều ngày đêm ở nhiệt độ cao bằng củi rừng, khiến cốt gốm kết khối đanh chắc như sành, gõ vào ngân vang như tiếng chuông đồng và giữ nhiệt, giữ hương vị thực phẩm tuyệt hảo.",
+    "historicalSignificance": "Phước Tích là ngôi làng cổ thứ hai của Việt Nam (sau Đường Lâm) được Nhà nước xếp hạng Di tích Quốc gia nhờ bảo tồn nguyên vẹn cấu trúc không gian làng Việt cổ miền Trung và di sản nghề gốm tiến vua.",
+    "localTips": [
+      "Tản bộ qua những lối ngõ rợp bóng cây chè tàu cổ thụ dẫn vào các ngôi nhà rường 3 gian 2 chái không dùng cổng gạch mà ngăn cách bằng hàng rào xanh.",
+      "Ghé thăm xưởng gốm truyền thống bên bờ sông Ô Lâu để quan sát kỹ thuật chuốt gốm trên bàn xoay và xem dấu tích các lò sấp, lò ngửa cổ xưa.",
+      "Đặt trước bữa cơm quê dân dã nấu trong om đất Phước Tích để cảm nhận vị ngọt thơm đặc trưng của gốm nung củi truyền thống."
+    ],
+    "imageUrl": "/images/places/lang-gom-phuoc-tich.jpg",
+    "tags": [
+      "Gốm Phước Tích",
+      "Làng cổ",
+      "Nhà rường",
+      "Sông Ô Lâu"
+    ],
+    "estimatedVisitTimeMinutes": 120,
+    "sources": [
+      {
+        "title": "Cục Di sản Văn hóa — Di tích kiến trúc nghệ thuật Làng cổ Phước Tích",
+        "url": "http://dsvh.gov.vn"
+      },
+      {
+        "title": "Cổng thông tin điện tử tỉnh Thừa Thiên Huế — Di sản Làng cổ Phước Tích",
+        "url": "https://thuathienhue.gov.vn"
+      }
+    ]
+  },
+  {
+    "id": "hoa-giay-thanh-tien",
+    "name": "Thanh Tien Paper Flower Village",
+    "vietnameseName": "Làng Hoa Giấy Thanh Tiên",
+    "category": "craft",
+    "categoryLabel": "Làng Nghề Thủ Công",
+    "location": "Xã Phú Mậu, Thành phố Huế, Thừa Thiên Huế",
+    "coordinates": {
+      "lat": 16.5067,
+      "lng": 107.5931
+    },
+    "shortDescription": "Nghệ thuật chế tác hoa giấy tam nguyên và hoa sen giấy thanh khiết bên hạ lưu sông Hương với lịch sử hơn ba thế kỷ.",
+    "story": "Nằm ở bờ nam hạ lưu sông Hương đối diện phố cổ Bao Vinh, làng Thanh Tiên đã gìn giữ nghề làm hoa giấy truyền thống suốt hơn 300 năm. Trong điều kiện thời tiết xứ Huế mưa lạnh kéo dài vào dịp cuối năm khiến hoa tươi khó nở đúng Tết, người dân Thanh Tiên đã sáng tạo nên những cành hoa giấy ngũ sắc bền bỉ và những đóa sen giấy thanh cao để dâng cúng tổ tiên, trang hoàng trang nghiêm nơi bàn thờ gia tiên và đình chùa.",
+    "craftDetails": "Nghệ nhân dùng tre lồ ô phơi khô vót làm cành, giấy bản nhuộm màu chiết xuất hoàn toàn từ lá cây, vỏ quả, củ nghệ và nhựa thông. Mỗi cành hoa truyền thống luôn có 3 bông lớn ở giữa tượng trưng cho Tam Cương (Quân – Sư – Phụ) và 5 bông nhỏ xung quanh tượng trưng cho Ngũ Thường (Nhân – Lễ – Nghĩa – Trí – Tín), kết hợp kỹ thuật tạo gân cánh hoa bằng đục gỗ và xương lá dừa.",
+    "historicalSignificance": "Hoa giấy Thanh Tiên không chỉ là sản phẩm mỹ thuật dân gian mà còn ẩn chứa triết lý Nho học và Phật giáo sâu sắc của cư dân vùng kinh kỳ Phú Xuân.",
+    "localTips": [
+      "Tham gia xưởng trải nghiệm gấp và tạo gân cánh hoa sen giấy dưới sự hướng dẫn trực tiếp của các nghệ nhân trong làng.",
+      "Kết hợp tham quan làng hoa giấy Thanh Tiên và làng tranh dân gian Làng Sình nằm ngay kế bên trên cùng tuyến đường ven sông Hương.",
+      "Những đóa hoa sen giấy Thanh Tiên có thể tháo rời cánh gọn gàng, rất thuận tiện để đóng gói làm quà lưu niệm văn hóa."
+    ],
+    "imageUrl": "/images/places/hoa-giay-thanh-tien.jpg",
+    "tags": [
+      "Hoa giấy Thanh Tiên",
+      "Hoa sen giấy",
+      "Mỹ thuật dân gian",
+      "Phú Mậu"
+    ],
+    "estimatedVisitTimeMinutes": 75,
+    "sources": [
+      {
+        "title": "Trung tâm Bảo tồn Di tích Cố đô Huế — Hoa giấy Thanh Tiên trong đời sống tâm linh Huế",
+        "url": "https://hueworldheritage.org.vn"
+      },
+      {
+        "title": "Sở Du lịch Thừa Thiên Huế — Khám phá Làng hoa giấy Thanh Tiên",
+        "url": "https://visithue.vn"
+      }
+    ]
+  },
+  {
+    "id": "duc-dong-phuong-duc",
+    "name": "Phuong Duc Bronze Casting Village",
+    "vietnameseName": "Làng Đúc Đồng Phường Đúc",
+    "category": "craft",
+    "categoryLabel": "Làng Nghề Thủ Công",
+    "location": "Đường Bùi Thị Xuân, Phường Phường Đúc, TP. Huế",
+    "coordinates": {
+      "lat": 16.4561,
+      "lng": 107.5648
+    },
+    "shortDescription": "Làng nghề đúc đồng lừng danh bên bờ nam sông Hương, nơi khai sinh Cửu Đỉnh, Cửu Vị Thần Công và Đại Hồng Chung chùa Thiên Mụ.",
+    "story": "Trải dài dọc bờ nam sông Hương từ cầu Dã Viên lên phía đồi Vọng Cảnh, làng Phường Đúc (xưa là các giáp Kinh Nhơn, Bổn Bộ của dòng họ Nguyễn Văn gốc Bắc Ninh vào lập nghiệp từ đầu thế kỷ XVII) là công xưởng đúc đồng kiệt xuất của các chúa Nguyễn và vương triều Nguyễn. Chính đôi bàn tay tài hoa của các bậc tổ nghề tại đây đã đúc nên những bảo vật quốc gia bất hủ của Cố đô.",
+    "craftDetails": "Bí quyết của nghệ nhân Phường Đúc nằm ở khâu làm khuôn bằng đất sét trộn trấu và giấy dó giã nhuyễn, nung chín kỹ để chịu được dòng đồng nóng chảy trên 1.200°C mà không rạn nứt. Tỷ lệ pha hợp kim đồng, thiếc, chì và kẽm được tính toán chuẩn xác tuyệt đối để tạo nên độ ngân vang trầm hùng cho chuông chùa và đường nét chạm nổi sắc sảo trên đỉnh đồng, lư hương.",
+    "historicalSignificance": "Nghệ nhân Phường Đúc đã chế tác Đại Hồng Chung chùa Thiên Mụ (1710), Cửu Vị Thần Công (1803) và Cửu Đỉnh tại Thế Miếu Đại Nội Huế (1835–1837) — những kiệt tác đã được công nhận Bảo vật Quốc gia và Di sản Tư liệu Thế giới UNESCO.",
+    "localTips": [
+      "Ghé thăm các xưởng đúc đồng gia truyền họ Nguyễn trên đường Bùi Thị Xuân để tìm hiểu quy trình đắp khuôn đất và chạm khảm đồng thủ công.",
+      "Lắng nghe nghệ nhân thử âm thanh chuông đồng tiểu cảnh và giải thích cách thẩm định độ ngân của đồng Huế.",
+      "Nếu may mắn đến đúng ngày rót đồng vào khuôn (thường vào buổi sáng sớm), hãy giữ khoảng cách an toàn theo hướng dẫn của chủ lò."
+    ],
+    "imageUrl": "/images/places/duc-dong-phuong-duc.jpg",
+    "tags": [
+      "Đúc đồng",
+      "Phường Đúc",
+      "Cửu Đỉnh",
+      "Bảo vật quốc gia"
+    ],
+    "estimatedVisitTimeMinutes": 75,
+    "sources": [
+      {
+        "title": "Trung tâm Bảo tồn Di tích Cố đô Huế — Nghệ thuật đúc đồng thời Nguyễn",
+        "url": "https://hueworldheritage.org.vn"
+      },
+      {
+        "title": "Cổng thông tin điện tử tỉnh Thừa Thiên Huế — Làng nghề Đúc đồng Phường Đúc",
+        "url": "https://thuathienhue.gov.vn"
+      }
+    ]
+  },
+  {
+    "id": "tranh-lang-sinh",
+    "name": "Sinh Folk Woodblock Painting Village",
+    "vietnameseName": "Làng Tranh Dân Gian Làng Sình",
+    "category": "craft",
+    "categoryLabel": "Làng Nghề Thủ Công",
+    "location": "Thôn Lại Ân, Xã Phú Mậu, Thành phố Huế, Thừa Thiên Huế",
+    "coordinates": {
+      "lat": 16.5189,
+      "lng": 107.6014
+    },
+    "shortDescription": "Dòng tranh mộc bản dân gian hơn 450 năm tuổi gắn liền với tín ngưỡng cầu an và lễ hội vật truyền thống vùng ngã ba sông Hương – sông Bồ.",
+    "story": "Làng Sình (tên chữ là Lại Ân) nằm nơi hợp lưu của sông Hương và sông Bồ từ lâu đã nổi tiếng với dòng tranh mộc bản dân gian đặc trưng của xứ Đàng Trong. Khác với tranh Đông Hồ hay Hàng Trống ở miền Bắc thiên về trang trí Tết, tranh Làng Sình ra đời nhằm phục vụ đời sống tâm linh, tín ngưỡng thờ cúng bổn mạng, cầu bình an và mùa màng bội thu của cư dân vùng Thuận Hóa.",
+    "craftDetails": "Tranh được in từ ván khắc gỗ mít cổ truyền trên nền giấy dó quét điệp (vỏ sò điệp giã nhỏ trộn hồ nếp tạo ánh kim lấp lánh tự nhiên). Sau khi in nét đen bằng mực tro rơm nếp, người thợ dùng cọ rễ cây dứa dại để tô điểm các gam màu tự nhiên: đỏ từ gỗ vang, vàng từ hoa hòe và lá đung, xanh từ hạt mồng tơi, tạo nên vẻ đẹp mộc mạc mà sống động.",
+    "historicalSignificance": "Bảo tồn hơn 50 bộ ván khắc cổ chia thành ba đề tài lớn: tranh nhân vật (Bà Bổn Mạng, Táo Quân), tranh đồ vật và tranh súc vật (Thập nhị địa chi, Bát âm, Đô vật Làng Sình).",
+    "localTips": [
+      "Tự tay lăn mực ván khắc gỗ mít và điểm màu tự nhiên lên bức tranh con giáp của riêng mình tại không gian trưng bày của nghệ nhân Kỳ Hữu Phước.",
+      "Nếu đến Huế vào ngày mùng 10 tháng Giêng âm lịch, đừng bỏ lỡ Hội vật Làng Sình truyền thống sôi nổi ngay đình làng Lại Ân.",
+      "Tìm hiểu ý nghĩa của bộ tranh 'Bát Âm' và 'Mười hai con giáp' được khắc tinh tế trên những tấm mộc bản trăm năm."
+    ],
+    "imageUrl": "/images/places/tranh-lang-sinh.jpg",
+    "tags": [
+      "Tranh Làng Sình",
+      "Mộc bản",
+      "Giấy dó quét điệp",
+      "Mỹ thuật dân gian"
+    ],
+    "estimatedVisitTimeMinutes": 60,
+    "sources": [
+      {
+        "title": "Bảo tàng Lịch sử Thừa Thiên Huế — Di sản Tranh dân gian Làng Sình",
+        "url": "https://thuathienhue.gov.vn"
+      },
+      {
+        "title": "Sở Du lịch Thừa Thiên Huế — Tranh dân gian Làng Sình xứ Huế",
+        "url": "https://visithue.vn"
+      }
+    ]
+  },
+  {
+    "id": "dem-bang-pho-trach",
+    "name": "Pho Trach Lepironia Mat & Cushion Village",
+    "vietnameseName": "Làng Đệm Bàng Phò Trạch",
+    "category": "craft",
+    "categoryLabel": "Làng Nghề Thủ Công",
+    "location": "Xã Phong Bình, Huyện Phong Điền, Thừa Thiên Huế",
+    "coordinates": {
+      "lat": 16.6285,
+      "lng": 107.3342
+    },
+    "shortDescription": "Kỹ nghệ đan lát cỏ bàng dẻo dai vùng trũng ngập nước Phong Điền, chuyển mình từ chiếc đệm cổ truyền thành phụ kiện thủ công đương đại.",
+    "story": "Hình thành cùng thời kỳ khai canh làng cổ cuối thế kỷ XV, nghề làm đệm bàng tại Phò Trạch gắn liền với hệ sinh thái vùng trũng ngập nước ven sông Ô Lâu, nơi cây cỏ bàng vươn lên xanh tốt. Từ những chiếc đệm trải giường êm ấm, thoáng mát trong nếp nhà xưa, người dân Phò Trạch ngày nay đã thổi hồn đương đại vào sợi cỏ bàng qua những mẫu túi xách, mũ, hộp trà và đồ trang trí nội thất xuất khẩu.",
+    "craftDetails": "Cỏ bàng sau khi thu hoạch từ đầm lầy được phân loại theo độ dài, phơi dưới nắng giòn từ 5 đến 7 ngày cho ngả màu vàng óng rồi dùng chày gỗ giã dập đều từng thân cỏ để trở nên mềm dẻo như lụa. Người nghệ nhân đan hoàn toàn bằng tay theo lối đan nong mốt, nong đôi hoặc kết họa tiết mắt cáo vô cùng khít khao và bền chắc.",
+    "historicalSignificance": "Nghề đan đệm bàng Phò Trạch là minh chứng tiêu biểu cho trí tuệ thích ứng với thiên nhiên và sức sống bền bỉ của các làng nghề sinh thái vùng Bắc Thừa Thiên Huế.",
+    "localTips": [
+      "Ghé thăm làng vào mùa thu hoạch cỏ bàng (từ tháng 3 đến tháng 8) để ngắm những cánh đồng bàng xanh mướt và tiếng chày giã bàng rộn rã khắp thôn xóm.",
+      "Kết hợp hành trình tham quan Làng đệm bàng Phò Trạch cùng Làng cổ Phước Tích cách đó chỉ khoảng 4km.",
+      "Chọn mua các sản phẩm giỏ xách, lót ly và hộp đựng trà đan từ cỏ bàng tự nhiên thân thiện với môi trường."
+    ],
+    "imageUrl": "/images/places/dem-bang-pho-trach.jpg",
+    "tags": [
+      "Đệm bàng Phò Trạch",
+      "Cỏ bàng",
+      "Đan lát thủ công",
+      "Du lịch sinh thái"
+    ],
+    "estimatedVisitTimeMinutes": 60,
+    "sources": [
+      {
+        "title": "Cổng thông tin điện tử tỉnh Thừa Thiên Huế — Làng nghề Đệm bàng Phò Trạch",
+        "url": "https://thuathienhue.gov.vn"
+      },
+      {
+        "title": "Sở Du lịch Thừa Thiên Huế — Sức sống mới của cỏ bàng Phò Trạch",
+        "url": "https://visithue.vn"
+      }
+    ]
+  },
+  {
+    "id": "dai-noi-hue",
+    "name": "The Imperial Citadel of Hue",
+    "vietnameseName": "Đại Nội Kinh Thành Huế",
+    "category": "monument",
+    "categoryLabel": "Di Tích Lịch Sử",
+    "location": "Đường 23/8, Phường Thuận Hòa, Thành phố Huế",
+    "coordinates": {
+      "lat": 16.4697,
+      "lng": 107.5786
+    },
+    "shortDescription": "Trái tim của Quần thể Di tích Cố đô Huế được UNESCO vinh danh Di sản Văn hóa Thế giới, hội tụ tinh hoa kiến trúc và mỹ thuật cung đình triều Nguyễn.",
+    "story": "Khởi công khảo sát từ năm 1803 dưới triều vua Gia Long và được quy hoạch hoàn chỉnh dưới triều vua Minh Mạng, Đại Nội Huế (bao gồm Hoàng Thành và Tử Cấm Thành) là trung tâm chính trị, văn hóa và nghi lễ tối cao của vương triều Nguyễn suốt 143 năm (1802–1945). Từng cung điện, lầu gác nơi đây là kết tinh trí tuệ và bàn tay tài hoa của hàng vạn hiệp thợ xuất sắc nhất được triệu tập từ khắp các làng nghề truyền thống cả nước.",
+    "craftDetails": "Đại Nội Huế là bảo tàng sống động của mỹ thuật thủ công cung đình: nghệ thuật chạm khắc gỗ lim sơn son thếp vàng tại Điện Thái Hòa, kỹ nghệ Pháp lam (tráng men đồng nhiều màu) trên bờ nóc Ngọ Môn và Điện Kiến Trung, cùng nghệ thuật khảm sành sứ tinh xảo bậc nhất.",
+    "historicalSignificance": "Được UNESCO công nhận là Di sản Văn hóa Thế giới đầu tiên của Việt Nam vào năm 1993 và lưu giữ nhiều Bảo vật Quốc gia vô giá như Ngai vua triều Nguyễn, Cửu Đỉnh và hệ thống Châu bản, Mộc bản.",
+    "localTips": [
+      "Nên bắt đầu hành trình từ cổng Ngọ Môn vào sáng sớm (7:00 – 9:30) khi nắng dịu chiếu qua hồ Thái Dịch và cầu Trung Đạo.",
+      "Dành thời gian chiêm ngưỡng Điện Thái Hòa, Thế Miếu (nơi đặt Cửu Đỉnh) và Điện Kiến Trung vừa được trùng tu tráng lệ.",
+      "Thưởng thức chương trình Nhã nhạc Cung đình Huế (Di sản Văn hóa Phi vật thể của Nhân loại) tại Duyệt Thị Đường nằm trong khuôn viên Đại Nội."
+    ],
+    "imageUrl": "/images/places/dai-noi-hue.jpg",
+    "tags": [
+      "Đại Nội Huế",
+      "UNESCO",
+      "Kiến trúc cung đình",
+      "Triều Nguyễn"
+    ],
+    "estimatedVisitTimeMinutes": 180,
+    "sources": [
+      {
+        "title": "Trung tâm Bảo tồn Di tích Cố đô Huế — Quần thể Di tích Cố đô Huế",
+        "url": "https://hueworldheritage.org.vn"
+      },
+      {
+        "title": "UNESCO World Heritage Centre — Complex of Hué Monuments",
+        "url": "https://whc.unesco.org/en/list/678"
+      }
+    ]
+  },
+  {
+    "id": "chua-thien-mu",
+    "name": "Thien Mu Pagoda",
+    "vietnameseName": "Chùa Thiên Mụ (Linh Mụ Tự)",
+    "category": "spiritual",
+    "categoryLabel": "Tâm Linh & Cổ Tự",
+    "location": "Đồi Hà Khê, Phường Kim Long, Thành phố Huế",
+    "coordinates": {
+      "lat": 16.4529,
+      "lng": 107.5453
+    },
+    "shortDescription": "Đệ nhất cổ tự hơn 400 năm tuổi soi bóng bên dòng sông Hương thơ mộng với ngọn tháp bát giác Phước Duyên 7 tầng biểu tượng của Cố đô.",
+    "story": "Năm Tân Sửu (1601), Đoan Quốc Công Nguyễn Hoàng trong chuyến tuần du dọc bờ sông Hương đã bắt gặp ngọn đồi Hà Khê thế đất như con rồng quay đầu nhìn lại, gắn liền với huyền tích bà lão áo đỏ quần lục báo mộng lập chùa tụ khí bền long mạch. Ngôi chùa được dựng lên với tên gọi Thiên Mụ Tự, mở đầu cho lịch sử hơn bốn thế kỷ kiến tạo văn hóa Phật giáo xứ Đàng Trong.",
+    "craftDetails": "Nổi bật nhất tại chùa là tháp Phước Duyên hình bát giác cao 21m gồm 7 tầng xây bằng gạch mộc và đá thanh năm 1844 dưới thời vua Thiệu Trị, cùng Đại Hồng Chung nặng hơn 2.000kg đúc năm 1710 bởi các nghệ nhân Phường Đúc và tấm bia đá cẩm thạch khổng lồ đặt trên lưng rùa từ năm 1715.",
+    "historicalSignificance": "Được vua Thiệu Trị xếp vào một trong hai mươi thắng cảnh đẹp nhất đất thần kinh ('Thần Kinh Nhị Thập Cảnh') qua bài thơ khắc bia 'Thiên Mụ chung thanh'.",
+    "localTips": [
+      "Đến chùa vào khoảng 16:30 – 17:30 để ngắm hoàng hôn buông dần trên mặt nước sông Hương ngay trước bến thuyền và tháp Phước Duyên.",
+      "Mặc trang phục lịch sự, kín đáo khi bước qua cổng Tam Quan vào khu vực chánh điện Đại Hùng và vườn thông tĩnh mịch.",
+      "Có thể kết hợp đi thuyền rồng ngược dòng sông Hương từ bến Tòa Khâm lên chùa Thiên Mụ và làng cổ Kim Long."
+    ],
+    "imageUrl": "/images/places/chua-thien-mu.jpg",
+    "tags": [
+      "Chùa Thiên Mụ",
+      "Tháp Phước Duyên",
+      "Cổ tự",
+      "Sông Hương"
+    ],
+    "estimatedVisitTimeMinutes": 60,
+    "sources": [
+      {
+        "title": "Trung tâm Bảo tồn Di tích Cố đô Huế — Chùa Thiên Mụ",
+        "url": "https://hueworldheritage.org.vn"
+      },
+      {
+        "title": "Hồ sơ Di sản Quần thể Cố đô Huế — UNESCO World Heritage",
+        "url": "https://whc.unesco.org/en/list/678"
+      }
+    ]
+  },
+  {
+    "id": "khong-gian-am-thuc-vy-da",
+    "name": "Vy Da Imperial Culinary & Tea Garden",
+    "vietnameseName": "Không Gian Ẩm Thực & Trà Thất Vỹ Dạ",
+    "category": "cuisine",
+    "categoryLabel": "Ẩm Thực Bản Địa",
+    "location": "Đường Nguyễn Sinh Cung, Phường Vỹ Dạ, Thành phố Huế",
+    "coordinates": {
+      "lat": 16.4782,
+      "lng": 107.6012
+    },
+    "shortDescription": "Nghệ thuật ẩm thực cung đình và bánh trái dân gian xứ Huế giữa khuôn viên nhà vườn Vỹ Dạ rợp bóng trúc xanh bên dòng Hương Giang.",
+    "story": "Vùng đất Vỹ Dạ từ xưa vốn là nơi quy tụ các phủ đệ của vương thân quốc thích và danh gia vọng tộc triều Nguyễn, nơi nghệ thuật 'ăn bằng mắt, thưởng bằng tâm' của người Huế được nâng lên tầm triết lý sống. Giữa không gian nhà vườn truyền thống với bình phong, bể cạn và hàng cau thẳng tắp, di sản ẩm thực Huế hiện lên qua những thức quà tinh tế từ bánh bèo, bánh nậm, bánh ít trần đến trà sen hồ Tịnh Tâm và chè hạt sen long nhãn.",
+    "craftDetails": "Nghệ thuật chế biến ẩm thực Huế đòi hỏi sự cầu kỳ trong từng khâu tuyển chọn nguyên liệu theo mùa, cách cắt tỉa rau củ thành hình long phụng hài hòa ngũ hành âm dương và bí quyết ủ trà trong búp sen Bách Diệp tươi lúc bình minh để giữ trọn hương thanh khiết.",
+    "historicalSignificance": "Việt Nam sở hữu khoảng 3.000 món ăn truyền thống thì riêng xứ Huế đã đóng góp hơn 1.700 món ăn cung đình và dân gian, trở thành kinh đô ẩm thực đặc sắc của cả nước.",
+    "localTips": [
+      "Thưởng thức mâm bánh Huế truyền thống (bánh bèo chén, bánh nậm lá dong, bánh lọc gói lá chuối, bánh ram ít) dùng kèm nước mắm tôm chấy ngọt thanh.",
+      "Trải nghiệm nghi thức pha trà sen Huế và thưởng thức mứt gừng Kim Long, bánh in ngũ sắc trong không gian nhà rường cổ.",
+      "Tản bộ dọc đường Hàn Mặc Tử và Nguyễn Sinh Cung lúc chiều muộn để cảm nhận vẻ đẹp thơ mộng của 'Thôn Vỹ Dạ'."
+    ],
+    "imageUrl": "/images/places/khong-gian-am-thuc-vy-da.jpg",
+    "tags": [
+      "Ẩm thực cung đình",
+      "Trà sen Huế",
+      "Nhà vườn Vỹ Dạ",
+      "Bánh Huế"
+    ],
+    "estimatedVisitTimeMinutes": 90,
+    "sources": [
+      {
+        "title": "Sở Du lịch Thừa Thiên Huế — Huế Kinh đô Ẩm thực",
+        "url": "https://visithue.vn"
+      },
+      {
+        "title": "Cổng thông tin điện tử tỉnh Thừa Thiên Huế — Văn hóa Ẩm thực Cố đô",
+        "url": "https://thuathienhue.gov.vn"
+      }
+    ]
+  },
+  {
+    "id": "doi-vong-canh",
+    "name": "Vong Canh Pine Hill & Perfume River Bend",
+    "vietnameseName": "Đồi Vọng Cảnh & Khúc Quanh Sông Hương",
+    "category": "nature",
+    "categoryLabel": "Cảnh Quan Sinh Thái",
+    "location": "Đường Huyền Trân Công Chúa, Phường Thủy Biều, Thành phố Huế",
+    "coordinates": {
+      "lat": 16.4275,
+      "lng": 107.5594
+    },
+    "shortDescription": "Tuyệt tác cảnh quan thông reo soi bóng khúc uốn mềm mại nhất của dòng sông Hương, nơi các vị vua triều Nguyễn từng dừng chân thưởng ngoạn.",
+    "story": "Đồi Vọng Cảnh cao 43m nằm ở phía tây nam thành phố Huế, ngay đối diện điện Hòn Chén và ôm trọn khúc uốn lượn mềm mại như dải lụa của thượng nguồn sông Hương. Dưới thời Nguyễn, các vị hoàng đế thường ngự giá lên đỉnh đồi để ngắm cảnh sơn thủy hữu tình, lắng nghe tiếng thông reo hòa cùng nhịp chèo thuyền trên mặt nước biếc và vườn thanh trà Thủy Biều trù phú phía bên kia bờ.",
+    "craftDetails": "Không gian sinh thái đồi Vọng Cảnh là điểm giao thoa hoàn hảo giữa cảnh quan thiên nhiên và trục di sản phía tây kinh thành, kết nối liền mạch Làng hương Thủy Xuân, Lăng Tự Đức, Lăng Đồng Khánh và nhà vườn thanh trà Thủy Biều.",
+    "historicalSignificance": "Nằm trong vùng cảnh quan bảo vệ nghiêm ngặt của Quần thể Di tích Cố đô Huế, lưu giữ tầm nhìn phong thủy cổ điển giữa núi Ngọc Trản và dòng Hương Giang.",
+    "localTips": [
+      "Kết hợp tham quan Làng hương Thủy Xuân (cách đồi Vọng Cảnh chỉ 600m) rồi tản bộ dưới rừng thông ngắm hoàng hôn trên sông Hương.",
+      "Thời điểm đẹp nhất là buổi sáng sớm khi sương mờ còn bảng lảng trên mặt sông hoặc hoàng hôn từ 16:45 – 17:45.",
+      "Ghé thăm làng cổ Thủy Biều ngay chân đồi để thưởng thức đặc sản bưởi Thanh Trà tiến vua ngọt thanh."
+    ],
+    "imageUrl": "/images/places/doi-vong-canh.jpg",
+    "tags": [
+      "Đồi Vọng Cảnh",
+      "Sông Hương",
+      "Rừng thông",
+      "Cảnh quan Huế"
+    ],
+    "estimatedVisitTimeMinutes": 60,
+    "sources": [
+      {
+        "title": "Sở Du lịch Thừa Thiên Huế — Thắng cảnh Đồi Vọng Cảnh",
+        "url": "https://visithue.vn"
+      },
+      {
+        "title": "Trung tâm Bảo tồn Di tích Cố đô Huế — Cảnh quan Sông Hương & Núi Ngự",
+        "url": "https://hueworldheritage.org.vn"
+      }
+    ]
+  }
+]
