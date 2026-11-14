@@ -7,7 +7,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Vietnamese Cultural Palette
+        // HoaLang UI Rule v1.0 Palette (Luxury Editorial × Vietnamese Cultural Depth)
+        parchment: '#F5F0E8', // Nền trang chính — màu giấy dó
+        cream:     '#FAF7F2', // Nền card, panel, section xen kẽ
+        ink:       '#1A1208', // Text chính
+        charcoal:  '#2E2318', // Section tối, footer, heading đậm
+        lacquer:   '#8B1A1A', // Đỏ sơn mài — button primary, accent chính
+        gold:      '#C4952A', // Vàng nghệ — section label, tag, icon
+        bronze:    '#7A5C2E', // Nâu đồng — link, hover state
+        stone:     '#D4C9B5', // Border, divider, input border
+        ash:       '#8C8070', // Text phụ, caption, placeholder
+
+        // Vietnamese Cultural Palette (Backward compatibility)
         primary: {
           50: '#f0fdf9',
           100: '#ccfbf1',
@@ -52,6 +63,8 @@ export default {
         }
       },
       fontFamily: {
+        display: ['Cormorant Garamond', 'Georgia', 'serif'],
+        body:    ['Be Vietnam Pro', 'Helvetica Neue', 'sans-serif'],
         sans: [
           'Be Vietnam Pro',
           'Inter',
@@ -62,11 +75,23 @@ export default {
           'sans-serif'
         ],
         serif: [
+          'Cormorant Garamond',
           'Merriweather',
           'Playfair Display',
           'Georgia',
           'serif'
         ]
+      },
+      borderRadius: {
+        xs: '2px',
+        sm: '3px',
+        md: '6px',
+      },
+      transitionTimingFunction: {
+        'ease-out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
+      },
+      maxWidth: {
+        content: '1400px',
       },
       boxShadow: {
         'soft': '0 4px 20px -2px rgba(15, 76, 58, 0.08)',
