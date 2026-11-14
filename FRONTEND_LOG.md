@@ -61,3 +61,20 @@ Tài liệu này ghi nhận mọi thay đổi về UI components, styling, Desig
      - **Hồ sơ đang đăng nhập (Active Identity Dossier):** Thẻ Ấn Triện Định Danh hiển thị rõ ai đang thao tác, mã thành viên, ngày gia nhập và biểu mẫu chỉnh sửa trực tiếp Họ tên / Danh hiệu / Tiểu sử.
      - **Chuyển nhanh danh tính 1 chạm (Demo Switcher):** Cho phép chuyển tức thì giữa **TV1 (Trưởng nhóm)**, **TV2 (Gemini AI)** và **TV3 (Hộ chiếu & Dữ liệu)**.
   3. Cập nhật `src/components/layout/Navbar.tsx` hiển thị trực tiếp **Ấn Triện + Họ Tên + Danh Hiệu** của người đang đăng nhập ngay trên thanh điều hướng (cả Desktop và Mobile) kèm nút Đăng xuất nhanh.
+
+
+---
+
+## [2026-11-14T10:35:00+07:00] Hoàn thiện Giao diện Lập Hành Trình Văn Hóa AI Mobile-First (`src/features/journey/`)
+
+- **Người thực hiện:** TV2 (Gemini & Cultural Journey — nhánh `NHANH_TV2`)
+- **Tác vụ hoàn thành:**
+  1. Module Dịch vụ Frontend:
+     - `src/services/journeyApi.ts`: Client gọi `POST /api/itinerary` kèm `AbortSignal`, định dạng lỗi `JourneyApiError` chuẩn hợp đồng v1.
+     - `src/services/journeyStorage.ts`: Quản lý lưu trữ cục bộ khóa `soulvillage.itineraries.v1`, chống trùng lặp theo `id`, giới hạn 20 hành trình (TV3 có thể đọc để tính huy hiệu Passport).
+  2. Các Component Giao diện Chuẩn HoaLang UI Rule v1.0:
+     - `src/features/journey/JourneyPage.tsx`: Trang chủ đạo gắn với route `/#/journey`, tự động đọc `?placeId=` từ URL để ghim địa điểm ưu tiên, tích hợp `AbortController`, quản lý danh sách hành trình đã lưu. Header có khoảng đệm `pt-24 sm:pt-28` tương thích hoàn hảo với fixed Navbar của TV1.
+     - `src/features/journey/JourneyForm.tsx`: Biểu mẫu tùy biến thông số du khảo chuẩn mobile-first (quỹ thời gian slider 2–8h, chip sở thích đa lựa chọn bo góc `2px`, điểm khởi hành, nhịp độ `relaxed|moderate|packed`, người đồng hành `solo|couple|family|friends`).
+     - `src/features/journey/JourneyTimeline.tsx`: Hiển thị dòng thời gian dọc phong cách Luxury Editorial, phân biệt nhãn Gemini (`lacquer`) và Fallback (`gold`), thông tin di chuyển, chi phí ước tính, nút Lưu và Chia sẻ nhanh (`navigator.share`).
+  3. Đa Ngôn ngữ Song ngữ (i18n):
+     - Bổ sung trọn vẹn từ điển `"journey"` trong `messages/vi.json` và `messages/en.json`, bảo toàn các khóa standby của TV1.
