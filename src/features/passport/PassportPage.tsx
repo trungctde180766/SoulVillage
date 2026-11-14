@@ -27,16 +27,17 @@ import {
   TagBadge,
 } from '../../components/shared';
 import { FALLBACK_PLACE_IMAGE_URL, getPlaceById } from '../../data/places';
+import { useAuth } from '../../lib/auth';
 import { useLocale, useTranslations, type SupportedLocale } from '../../lib/i18n';
 import { loadSavedJourneys } from '../../services/journeyStorage';
 import {
   CULTURAL_REWARDS_CATALOG,
+  getAttemptedQuizIds,
   getLocalPassport,
   getRedeemedRewards,
   getTotalEarnedPoints,
   QUIZ_CORRECT_POINTS,
   redeemPassportReward,
-  resetLocalPassport,
   submitQuizAnswer,
   updatePassportDisplayName,
   type RedeemedRewardRecord,
@@ -114,6 +115,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
   const questions = useMemo(() => getLocalizedQuestions(activeLocale), [activeLocale]);
 
   const [profile, setProfile] = useState<UserPassportProfile>(() => getLocalPassport());
+  const [attemptedQuizIds, setAttemptedQuizIds] = useState<string[]>(() => getAttemptedQuizIds());
   const [redeemedRewards, setRedeemedRewards] = useState<RedeemedRewardRecord[]>(() =>
     getRedeemedRewards()
   );
@@ -123,13 +125,12 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [answered, setAnswered] = useState<boolean>(false);
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
-  const [wasAlreadyCompletedOnSubmit, setWasAlreadyCompletedOnSubmit] = useState<boolean>(false);
+  const [wasRedoOnSubmit, setWasRedoOnSubmit] = useState<boolean>(false);
   const [lastPointsAwarded, setLastPointsAwarded] = useState<number>(0);
   const [newlyUnlockedBadges, setNewlyUnlockedBadges] = useState<CulturalBadge[]>([]);
 
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
   const [nameInput, setNameInput] = useState<string>(profile.displayName);
-  const [confirmingReset, setConfirmingReset] = useState<boolean>(false);
   const [showJourneyHint, setShowJourneyHint] = useState<boolean>(false);
 
   useEffect(() => {
@@ -141,6 +142,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
 
     const syncStorageState = () => {
       setProfile(getLocalPassport());
+      setAttemptedQuizIds(getAttemptedQuizIds());
       setRedeemedRewards(getRedeemedRewards());
       setSavedJourneys(loadSavedJourneys());
     };
@@ -163,8 +165,9 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
   );
 
   const linkedPlace = currentQuestion?.placeId ? getPlaceById(currentQuestion.placeId) : undefined;
-  const isCurrentQuestionCompleted = currentQuestion
-    ? profile.completedQuizIds.includes(currentQuestion.id)
+  const isCurrentQuestionAttempted = currentQuestion
+    ? attemptedQuizIds.includes(currentQuestion.id) ||
+      profile.completedQuizIds.includes(currentQuestion.id)
     : false;
 
   const unlockedBadgesCount = useMemo(
@@ -180,17 +183,17 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
   );
 
   const currentRankTitle = useMemo(() => {
-    if (totalEarnedPoints >= 300 || profile.completedQuizIds.length >= 6) {
+    if (totalEarnedPoints >= 300) {
       return t.passport.rankMaster;
     }
-    if (totalEarnedPoints >= 150 || profile.completedQuizIds.length >= 3) {
+    if (totalEarnedPoints >= 150) {
       return t.passport.rankConnoisseur;
     }
-    if (totalEarnedPoints >= 100 || profile.completedQuizIds.length >= 2) {
+    if (totalEarnedPoints >= 100) {
       return t.passport.rankScholar;
     }
     return t.passport.rankNovice;
-  }, [profile.completedQuizIds.length, t.passport, totalEarnedPoints]);
+  }, [t.passport, totalEarnedPoints]);
 
   const decodedPlaces = useMemo(() => {
     return profile.visitedPlaceIds
@@ -224,7 +227,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
     setSelectedOption(null);
     setAnswered(false);
     setIsCorrect(false);
-    setWasAlreadyCompletedOnSubmit(false);
+    setWasRedoOnSubmit(false);
     setLastPointsAwarded(0);
     setNewlyUnlockedBadges([]);
   };
@@ -236,17 +239,19 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
     const result = submitQuizAnswer(currentQuestion.id, correct, currentQuestion.placeId);
 
     setProfile(result.profile);
+    setAttemptedQuizIds(getAttemptedQuizIds());
     setIsCorrect(correct);
     setAnswered(true);
-    setWasAlreadyCompletedOnSubmit(result.alreadyCompleted);
+    setWasRedoOnSubmit(result.isRedo);
     setLastPointsAwarded(result.pointsAdded);
     setNewlyUnlockedBadges(result.newlyUnlockedBadges);
   };
 
-  const handleRetryQuestion = () => {
+  const handleRedoQuestion = () => {
     setSelectedOption(null);
     setAnswered(false);
     setIsCorrect(false);
+    setWasRedoOnSubmit(true);
     setLastPointsAwarded(0);
     setNewlyUnlockedBadges([]);
   };
@@ -270,23 +275,6 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
       setProfile(res.profile);
       setRedeemedRewards(res.redeemedRewards);
     }
-  };
-
-  const handleResetPassport = () => {
-    if (!confirmingReset) {
-      setConfirmingReset(true);
-      return;
-    }
-    const fresh = resetLocalPassport();
-    setProfile(fresh);
-    setRedeemedRewards(getRedeemedRewards());
-    setSelectedOption(null);
-    setAnswered(false);
-    setIsCorrect(false);
-    setWasAlreadyCompletedOnSubmit(false);
-    setLastPointsAwarded(0);
-    setNewlyUnlockedBadges([]);
-    setConfirmingReset(false);
   };
 
   const handleOpenPlace = (placeId: string) => {
@@ -453,7 +441,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
                 </div>
               </div>
 
-              {/* Points Counter Plaque (Zero top clipping, crisp lining numerals) */}
+              {/* Points Counter Plaque */}
               <div className="bg-parchment border border-stone rounded-sm p-5 sm:p-6 space-y-4 relative">
                 <div className="text-center space-y-1.5 pt-1">
                   <span className="font-body text-label-sm uppercase text-ash block">
@@ -491,7 +479,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
                   </div>
                 </div>
 
-                {/* 3-Column Summary Stats (Lining numerals so 0 never looks like lowercase 'o') */}
+                {/* 3-Column Summary Stats */}
                 <div className="grid grid-cols-3 gap-2 pt-4 border-t border-stone/70 text-center">
                   <div className="px-1">
                     <div
@@ -526,7 +514,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
                 </div>
               </div>
 
-              {/* Cultural Badges Collection (Full text, NO ellipsis truncation!) */}
+              {/* Cultural Badges Collection */}
               <div className="space-y-3.5">
                 <div className="flex items-center justify-between gap-2">
                   <h3 className="font-body text-label-sm uppercase text-charcoal">
@@ -552,7 +540,6 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
                         }`}
                       >
                         <div className="flex items-start gap-3">
-                          {/* Badge Emblem */}
                           <div
                             className={`w-10 h-10 shrink-0 rounded-xs border p-0.5 flex items-center justify-center ${
                               isUnlocked
@@ -604,35 +591,6 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
                   })}
                 </div>
               </div>
-
-              {/* Demo Reset Control */}
-              {(totalEarnedPoints > 0 || redeemedRewards.length > 0) && (
-                <div className="pt-3 border-t border-stone/60 flex flex-wrap items-center justify-between gap-2">
-                  <button
-                    type="button"
-                    onClick={handleResetPassport}
-                    className={`inline-flex items-center gap-1.5 min-h-[40px] px-3 py-1.5 rounded-xs border text-[11px] font-semibold uppercase tracking-[0.10em] transition-colors duration-300 ${
-                      confirmingReset
-                        ? 'border-lacquer bg-lacquer text-cream'
-                        : 'border-stone bg-transparent text-ash hover:border-bronze hover:text-charcoal'
-                    }`}
-                  >
-                    <RotateCcw className="w-3.5 h-3.5" />
-                    <span>
-                      {confirmingReset ? t.passport.resetConfirmCta : t.passport.resetCta}
-                    </span>
-                  </button>
-                  {confirmingReset && (
-                    <button
-                      type="button"
-                      onClick={() => setConfirmingReset(false)}
-                      className="min-h-[40px] px-3 py-1.5 font-body text-caption text-ash underline hover:text-charcoal"
-                    >
-                      {t.passport.cancelEditCta}
-                    </button>
-                  )}
-                </div>
-              )}
             </div>
           </div>
 
@@ -642,10 +600,10 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
             <div className="space-y-4 border-b border-stone pb-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <SectionLabel>{t.passport.quizSectionLabel}</SectionLabel>
-                {isCurrentQuestionCompleted ? (
-                  <TagBadge variant="gold">{t.passport.quizCompletedTag}</TagBadge>
+                {isCurrentQuestionAttempted ? (
+                  <TagBadge variant="stone">{t.passport.quizCompletedTag}</TagBadge>
                 ) : (
-                  <TagBadge variant="stone">{t.passport.quizFirstTimeRewardTag}</TagBadge>
+                  <TagBadge variant="gold">{t.passport.quizFirstTimeRewardTag}</TagBadge>
                 )}
               </div>
 
@@ -653,6 +611,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
               <div className="flex flex-wrap items-center gap-2" role="tablist">
                 {questions.map((qItem, idx) => {
                   const completed = profile.completedQuizIds.includes(qItem.id);
+                  const attempted = attemptedQuizIds.includes(qItem.id);
                   const isActive = idx === currentQuizIndex;
                   return (
                     <button
@@ -666,11 +625,17 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
                           ? 'bg-charcoal text-cream border-charcoal'
                           : completed
                             ? 'bg-gold-20 text-charcoal border-gold/60 hover:border-bronze'
-                            : 'bg-parchment text-ink border-stone hover:border-bronze'
+                            : attempted
+                              ? 'bg-cream text-bronze border-bronze/50 hover:border-bronze'
+                              : 'bg-parchment text-ink border-stone hover:border-bronze'
                       }`}
                     >
                       <span>{String(idx + 1).padStart(2, '0')}</span>
-                      {completed && <Check className="w-3.5 h-3.5 text-gold shrink-0" />}
+                      {completed ? (
+                        <Check className="w-3.5 h-3.5 text-gold shrink-0" />
+                      ) : attempted ? (
+                        <RotateCcw className="w-3 h-3 text-bronze shrink-0" />
+                      ) : null}
                     </button>
                   );
                 })}
@@ -792,7 +757,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
                         )}
                         <span>
                           {isCorrect
-                            ? wasAlreadyCompletedOnSubmit
+                            ? wasRedoOnSubmit
                               ? t.passport.quizCorrectRepeatHeading
                               : t.passport.quizCorrectHeading
                             : t.passport.quizIncorrectHeading}
@@ -830,18 +795,22 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
                       </div>
                     )}
 
-                    {/* Quiz Navigation Buttons */}
+                    {/* Quiz Navigation Buttons (Redo always available, awards 0 points) */}
                     <div className="flex flex-wrap items-center gap-3 pt-1">
                       <Button type="button" variant="primary" onClick={handleNextQuestion}>
                         {currentQuizIndex + 1 < questions.length
                           ? t.passport.quizNextCta
                           : t.passport.quizRestartCta}
                       </Button>
-                      {!isCorrect && (
-                        <Button type="button" variant="ghost" onClick={handleRetryQuestion}>
-                          {t.passport.quizRetryCta}
-                        </Button>
-                      )}
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={handleRedoQuestion}
+                        className="inline-flex items-center gap-2"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5 text-bronze shrink-0" />
+                        <span>{t.passport.quizRetryCta}</span>
+                      </Button>
                     </div>
                   </div>
                 )}
@@ -853,7 +822,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
         {/* Classical HoaLang Ornament Divider ◆ ─────── ◆ */}
         <OrnamentDivider />
 
-        {/* NEW SECTION: Redeem Points for Craft Souvenirs & Workshop Passes */}
+        {/* Redeem Points for Craft Souvenirs & Workshop Passes (Strictly 1 per gift per person) */}
         <section className="bg-cream border border-stone rounded-sm p-6 sm:p-8 space-y-6">
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-stone pb-5">
             <div className="space-y-2 max-w-2xl">
@@ -886,6 +855,9 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
               const title = activeLocale === 'en' ? reward.nameEn : reward.nameVi;
               const desc = activeLocale === 'en' ? reward.descEn : reward.descVi;
               const pickup = activeLocale === 'en' ? reward.pickupNoteEn : reward.pickupNoteVi;
+              const limitTagText =
+                t.passport?.rewardLimitTag ??
+                (activeLocale === 'en' ? '1 per person limit' : 'Mỗi người 1 lượt đổi');
 
               return (
                 <article
@@ -906,6 +878,22 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
                         }}
                         className="w-full h-full object-cover transition-transform duration-600 ease-out group-hover:scale-[1.04]"
                       />
+
+                      {/* Left Pill: 1 Redemption Per Person Quota */}
+                      <div className="absolute top-2.5 left-2.5">
+                        <span
+                          className={`inline-flex items-center px-2 py-1 rounded-xs border bg-cream/95 font-body text-[10px] font-semibold uppercase tracking-[0.06em] ${numFontStyle} ${
+                            redeemedRecord
+                              ? 'border-gold text-bronze'
+                              : 'border-stone text-charcoal'
+                          }`}
+                        >
+                          {redeemedRecord ? '1/1' : '0/1'} ·{' '}
+                          {redeemedRecord ? t.passport.redeemedTag : limitTagText}
+                        </span>
+                      </div>
+
+                      {/* Right Pill: Cost in Points */}
                       <div className="absolute top-2.5 right-2.5">
                         <span
                           className={`inline-flex items-center px-2.5 py-1 rounded-xs border bg-cream shadow-subtle font-body text-[11px] font-semibold uppercase tracking-[0.08em] ${numFontStyle} ${
@@ -969,7 +957,7 @@ const PassportPageContent: React.FC<PassportPageProps> = ({
 
         {/* Lower Section: Saved Journeys (from TV2) & Explored Villages Stamp Book */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Saved Cultural Journeys (Read-only integration with TV2 journeyStorage) */}
+          {/* Saved Cultural Journeys */}
           <div className="lg:col-span-6 bg-cream border border-stone rounded-sm p-6 sm:p-7 space-y-4 flex flex-col justify-between">
             <div className="space-y-4">
               <SectionLabel>{t.passport.savedJourneysSectionLabel}</SectionLabel>
@@ -1121,11 +1109,7 @@ class PassportErrorBoundary extends React.Component<
             <p className="text-body-sm text-ash">
               Trình duyệt vừa giữ phiên bản bộ nhớ tạm cũ. Hãy bấm nút bên dưới để tải lại trang mới nhất.
             </p>
-            <Button
-              type="button"
-              variant="primary"
-              onClick={() => window.location.reload()}
-            >
+            <Button type="button" variant="primary" onClick={() => window.location.reload()}>
               Tải Lại Trang Ngay
             </Button>
           </div>
@@ -1136,10 +1120,15 @@ class PassportErrorBoundary extends React.Component<
   }
 }
 
-export const PassportPage: React.FC<PassportPageProps> = (props) => (
-  <PassportErrorBoundary>
-    <PassportPageContent {...props} />
-  </PassportErrorBoundary>
-);
+export const PassportPage: React.FC<PassportPageProps> = (props) => {
+  const { user: authUser } = useAuth();
+  const activeAccountKey = authUser?.id ?? 'guest';
+
+  return (
+    <PassportErrorBoundary>
+      <PassportPageContent key={activeAccountKey} {...props} />
+    </PassportErrorBoundary>
+  );
+};
 
 export default PassportPage;

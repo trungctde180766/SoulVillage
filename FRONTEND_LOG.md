@@ -88,4 +88,7 @@ Tài liệu này ghi nhận mọi thay đổi về UI components, styling, Desig
   2. Xây dựng module lưu trữ cục bộ `src/services/storage.ts` quản lý khóa `soulvillage.passport.v1`, khởi tạo `userId` duy nhất, tích hợp đọc số lượng hành trình từ `loadSavedJourneys()` (`src/services/journeyStorage.ts`), tự động mở khóa 4 huy hiệu văn hóa và hỗ trợ đổi điểm lấy phiếu quà làng nghề (`redeemPassportReward` không làm mất huy hiệu đã mở).
   3. Tạo ngân hàng 6 câu hỏi trắc nghiệm văn hóa gắn với `placeId` thực tế trong `src/features/passport/data/questions.ts` kèm hoạt cảnh thủ công tương tác riêng `src/features/passport/components/QuizCraftScene.tsx` (hỗ trợ song ngữ VI/EN).
   4. Xây dựng giao diện `src/features/passport/PassportPage.tsx` tuân thủ 100% `HoaLang UI Rule v1.0`, đồng bộ ngôn ngữ với `LocaleProvider` và điều hướng liền mạch sang `/places/:id` (TV1) và `/journey` (TV2).
-  5. Cập nhật từ điển song ngữ `messages/vi.json` và `messages/en.json` cho phân hệ `passport`.
+  5. Cập nhật quy tắc nghiệp vụ chặt chẽ trong `src/services/storage.ts` và `src/features/passport/PassportPage.tsx`:
+     - **Làm lại câu hỏi không tính điểm (`attemptedQuizIds` & `firstTryCorrectQuizIds`):** Chỉ trao `+50` điểm ở lần nộp đáp án đầu tiên nếu trả lời đúng; mọi lượt làm lại câu hỏi (dù lần đầu đúng hay sai) đều chỉ phục vụ ôn tập (`+0` điểm).
+     - **Mỗi người tối đa 1 lượt đổi với mỗi món quà tương ứng (`MAX_REDEMPTIONS_PER_REWARD = 1`):** Tách biệt hồ sơ Hộ chiếu theo từng tài khoản người dùng (`useAuth()` / `soulvillage.auth.v1`) và khóa chặt hạn mức `1/1` lượt đổi trên từng vật phẩm quà làng nghề.
+  6. Cập nhật từ điển song ngữ `messages/vi.json` và `messages/en.json` cho phân hệ `passport`.
