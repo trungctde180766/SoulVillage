@@ -41,7 +41,6 @@ Tài liệu này ghi nhận mọi thay đổi về server Express, router module
      - `POST /api/auth/logout` & `GET /api/auth/demo-accounts`: Hỗ trợ đăng xuất và danh sách tài khoản mẫu cho 3 thành viên (`tv1@soulvillage.vn`, `tv2@soulvillage.vn`, `tv3@soulvillage.vn`).
   2. Mount `app.use('/api/auth', createAuthRouter())` trong `server.js` và bổ sung kịch bản kiểm thử tự động vào `scripts/integration/verify-integration.mjs`.
 
-
 ---
 
 ## [2026-11-14T10:35:00+07:00] Hoàn thiện Module Backend Lập Hành Trình Văn Hóa AI (`server/features/journey/`)
@@ -59,3 +58,13 @@ Tài liệu này ghi nhận mọi thay đổi về server Express, router module
   4. Bộ kiểm thử tự động `server/features/journey/test/journey.test.js`:
      - 18 unit tests bao quát 100% kịch bản lỗi, biên, guardrails, fallback và router. 100% pass với `node:test`.
      - Đã kiểm thử live thành công với Gemini API key thật từ `.env.local` (trả về kết quả trong ~3.5s).
+
+---
+
+## [2026-11-14T11:15:00+07:00] Hoàn thiện Catalog API `/api/places` & `getPlaces()` (TV3)
+
+- **Người thực hiện:** TV3 (Danh mục văn hóa, Hộ chiếu & Quiz — nhánh `HuyVLT/Passport`)
+- **Tác vụ hoàn thành:**
+  1. Hoàn thiện `getPlaces()` trong `server/features/catalog/router.js` đọc đồng bộ `public/data/places.json` thông qua `new URL('../../../public/data/places.json', import.meta.url)` phục vụ đồng thời `/api/places` và `createJourneyRouter({ getPlaces })` của TV2.
+  2. Hoàn thiện `createCatalogRouter()` xử lý `GET /` (tương ứng `/api/places`) hỗ trợ lọc theo `category` (`craft`, `monument`, `cuisine`, `spiritual`, `nature`, `all`), kiểm tra `category` không hợp lệ trả `HTTP 400 INVALID_CATEGORY`, và tìm kiếm thông minh hỗ trợ chuẩn hóa tiếng Việt không dấu qua query `search`.
+  3. Bổ sung `GET /:id` (tương ứng `/api/places/:id`) trả chi tiết địa điểm hoặc `HTTP 404 PLACE_NOT_FOUND`.
