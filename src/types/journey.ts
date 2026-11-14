@@ -4,6 +4,7 @@ export interface JourneyPreference {
   startLocation: string;
   pace: 'relaxed' | 'moderate' | 'intensive';
   companion: 'solo' | 'couple' | 'family' | 'friends';
+  selectedPlaceIds?: string[];
 }
 
 export interface JourneyStop {

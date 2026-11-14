@@ -9,7 +9,19 @@ const app = express();
 const PORT = parseInt(process.env.PORT || '8080', 10);
 const HOST = '0.0.0.0';
 
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
+
+// Middleware xử lý lỗi cú pháp JSON payload gửi lên (trả về JSON 400 thay vì HTML stack trace)
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({
+      status: 'error',
+      error: 'Invalid JSON',
+      message: 'Dữ liệu JSON gửi lên không hợp lệ.'
+    });
+  }
+  next(err);
+});
 
 // 1. Health check endpoint for Google Cloud Run
 app.get('/api/health', (req, res) => {
@@ -59,7 +71,12 @@ app.use(express.static(distPath));
 
 // 4. SPA Fallback cho các router phía frontend
 app.use((req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
+  const indexPath = path.join(distPath, 'index.html');
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      res.status(500).send('Frontend bundle chưa được build. Vui lòng chạy npm run build trước khi khởi động production server.');
+    }
+  });
 });
 
 // Khởi động server lắng nghe trên 0.0.0.0

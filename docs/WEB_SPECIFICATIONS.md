@@ -47,8 +47,17 @@ export interface CulturalPlace {
 }
 ```
 
-### B. Định dạng hành trình (`JourneyItinerary`)
+### B. Định dạng hành trình (`JourneyItinerary` & `JourneyPreference`)
 ```typescript
+export interface JourneyPreference {
+  durationHours: number;
+  interests: string[];
+  startLocation: string;
+  pace: 'relaxed' | 'moderate' | 'intensive';
+  companion: 'solo' | 'couple' | 'family' | 'friends';
+  selectedPlaceIds?: string[];
+}
+
 export interface JourneyItinerary {
   id: string;
   title: string;

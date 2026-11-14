@@ -9,4 +9,6 @@ npm-debug.log*
 Dockerfile
 .dockerignore
 docs
+deliverables
+.gemini
 
