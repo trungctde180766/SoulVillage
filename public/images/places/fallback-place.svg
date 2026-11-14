@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" fill="none">
+  <rect width="1200" height="900" fill="#F5F0E8"/>
+  <rect x="36" y="36" width="1128" height="828" rx="3" stroke="#D4C9B5" stroke-width="2" fill="#FAF7F2"/>
+  <rect x="52" y="52" width="1096" height="796" rx="2" stroke="#C4952A" stroke-opacity="0.4" stroke-width="1"/>
+  
+  <!-- Subtle background lattice pattern -->
+  <g stroke="#D4C9B5" stroke-opacity="0.35" stroke-width="1">
+    <line x1="200" y1="52" x2="200" y2="848"/>
+    <line x1="1000" y1="52" x2="1000" y2="848"/>
+    <line x1="52" y1="220" x2="1148" y2="220"/>
+    <line x1="52" y1="680" x2="1148" y2="680"/>
+  </g>
+
+  <!-- Imperial Hue Motif & Conical Hat / Craft Silhouette -->
+  <g transform="translate(600, 410)">
+    <!-- Sun / Seal Circle -->
+    <circle cx="0" cy="-20" r="135" fill="#F5F0E8" stroke="#C4952A" stroke-width="1.5"/>
+    <circle cx="0" cy="-20" r="122" stroke="#D4C9B5" stroke-width="1" stroke-dasharray="4 4"/>
+    
+    <!-- Stylized Non La (Conical Hat) & Roof Silhouette -->
+    <path d="M-110 25 L0 -95 L110 25 Z" fill="#FAF7F2" stroke="#2E2318" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M-82 -5 L82 -5" stroke="#C4952A" stroke-width="1.2" stroke-opacity="0.7"/>
+    <path d="M-55 -35 L55 -35" stroke="#C4952A" stroke-width="1.2" stroke-opacity="0.7"/>
+    <path d="M-28 -65 L28 -65" stroke="#C4952A" stroke-width="1.2" stroke-opacity="0.7"/>
+    <path d="M-110 25 Q0 48 110 25" stroke="#8B1A1A" stroke-width="2.5" fill="none"/>
+
+    <!-- Perfume River Waves -->
+    <path d="M-160 65 Q-120 52 -80 65 T0 65 T80 65 T160 65" stroke="#7A5C2E" stroke-width="1.5" fill="none"/>
+    <path d="M-120 82 Q-80 70 -40 82 T40 82 T120 82" stroke="#D4C9B5" stroke-width="1.5" fill="none"/>
+  </g>
+
+  <!-- Imperial Seal Stamp -->
+  <g transform="translate(566, 545)">
+    <rect x="0" y="0" width="68" height="68" rx="2" fill="#8B1A1A" fill-opacity="0.1" stroke="#8B1A1A" stroke-width="1.5"/>
+    <rect x="6" y="6" width="56" height="56" rx="1" stroke="#8B1A1A" stroke-width="1" stroke-opacity="0.6"/>
+    <text x="34" y="39" text-anchor="middle" fill="#8B1A1A" font-family="Georgia, serif" font-size="14" font-weight="bold" letter-spacing="2">HỒN LÀNG</text>
+  </g>
+
+  <!-- Editorial Typography Caption -->
+  <text x="600" y="665" text-anchor="middle" fill="#2E2318" font-family="Georgia, serif" font-size="28" letter-spacing="3">DI SẢN VĂN HÓA CỐ ĐÔ HUẾ</text>
+  <text x="600" y="700" text-anchor="middle" fill="#8C8070" font-family="sans-serif" font-size="12" letter-spacing="4">SOULVILLAGE × HOALANG EDITORIAL ARCHIVE</text>
+</svg>
