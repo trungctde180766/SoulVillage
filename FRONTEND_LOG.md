@@ -25,3 +25,15 @@ Tài liệu này ghi nhận mọi thay đổi về UI components, styling, Desig
 - **Lưu ý quan trọng:**
   - Tuyệt đối không dùng màu nền trắng thuần `#FFFFFF` hoặc bo góc `rounded-2xl` / `rounded-full`.
   - Mọi thành viên TV1, TV2, TV3 kế thừa các component từ `src/components/shared/`.
+
+---
+
+## [2026-11-14T09:35:00+07:00] Hoàn thiện Danh mục Dữ liệu Văn hóa Huế, Hộ Chiếu Di Sản & Quiz Văn Hóa (TV3)
+
+- **Người thực hiện:** TV3 (Danh mục văn hóa, Hộ chiếu & Quiz — nhánh `HuyVLT/Passport`)
+- **Tác vụ hoàn thành:**
+  1. Biên khảo và nhập liệu chuẩn xác 11 địa điểm làng nghề, di tích, cổ tự, ẩm thực và cảnh quan Cố đô Huế trong `public/data/places.json` kèm ảnh dự phòng `public/images/places/fallback-place.svg` và module truy cập `src/data/places.ts`.
+  2. Xây dựng module lưu trữ cục bộ `src/services/storage.ts` quản lý khóa `soulvillage.passport.v1`, khởi tạo `userId` duy nhất, tích hợp đọc số lượng hành trình từ `loadSavedJourneys()` (`src/services/journeyStorage.ts`) và tự động đánh giá mở khóa 4 ấn triện văn hóa (`Học giả di sản`, `Người lập hành trình`, `Tri kỷ làng nghề`, `Bậc thầy cố đô`).
+  3. Tạo ngân hàng 6 câu hỏi trắc nghiệm văn hóa gắn với `placeId` thực tế trong `src/features/passport/data/questions.ts` (hỗ trợ song ngữ VI/EN).
+  4. Xây dựng giao diện `src/features/passport/PassportPage.tsx` tuân thủ 100% `HoaLang UI Rule v1.0`: nền `bg-parchment`, thẻ sổ tay hộ chiếu `bg-cream` viền kép `border-stone`/`border-gold`, hiệu ứng `AnimatedNumber` cho điểm tích lũy, ấn triện vector tinh xảo không dùng emoji hoạt hình, `OrnamentDivider`, vùng bấm phương án trả lời `>= 48px` trên mobile và hộp trích dẫn `Cultural Fun Fact` bằng font `Cormorant Garamond`.
+  5. Cập nhật từ điển song ngữ `messages/vi.json` và `messages/en.json` cho phân hệ `passport`.

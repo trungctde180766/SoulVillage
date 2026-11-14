@@ -16,3 +16,13 @@ Tài liệu này ghi nhận mọi thay đổi về server Express, router module
 - **Lưu ý quan trọng:**
   - TV3 tiếp quản `server/features/catalog/` và `public/data/places.json`.
   - TV2 tiếp quản `server/features/journey/` và sử dụng hàm `getPlaces` được inject từ `server.js`.
+
+---
+
+## [2026-11-14T09:35:00+07:00] Hoàn thiện Catalog API `/api/places` & `getPlaces()` (TV3)
+
+- **Người thực hiện:** TV3 (Danh mục văn hóa, Hộ chiếu & Quiz — nhánh `HuyVLT/Passport`)
+- **Tác vụ hoàn thành:**
+  1. Hoàn thiện `getPlaces()` trong `server/features/catalog/router.js` đọc đồng bộ `public/data/places.json` thông qua `new URL('../../../public/data/places.json', import.meta.url)`.
+  2. Hoàn thiện `createCatalogRouter()` xử lý `GET /` (tương ứng `/api/places`) hỗ trợ lọc theo `category` (`craft`, `monument`, `cuisine`, `spiritual`, `nature`, `all`), kiểm tra `category` không hợp lệ trả `HTTP 400 INVALID_CATEGORY`, và tìm kiếm thông minh hỗ trợ chuẩn hóa tiếng Việt không dấu qua query `search`.
+  3. Bổ sung `GET /:id` (tương ứng `/api/places/:id`) trả chi tiết địa điểm hoặc `HTTP 404 PLACE_NOT_FOUND`.
