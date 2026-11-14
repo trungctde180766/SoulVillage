@@ -2,26 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* HoaLang UI Rule v1.0 Palette Tokens */
+  --color-parchment: #F5F0E8;
+  --color-cream: #FAF7F2;
+  --color-ink: #1A1208;
+  --color-charcoal: #2E2318;
+  --color-lacquer: #8B1A1A;
+  --color-gold: #C4952A;
+  --color-bronze: #7A5C2E;
+  --color-stone: #D4C9B5;
+  --color-ash: #8C8070;
+
+  /* HoaLang Layout & Spacing Tokens */
+  --page-padding-x: clamp(20px, 5vw, 80px);
+  --section-padding-y: clamp(64px, 8vw, 120px);
+  --max-content-width: 1400px;
+  --card-gap: 20px;
+  --section-gap: clamp(40px, 5vw, 64px);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: var(--color-parchment);
+    color: var(--color-ink);
+    font-family: 'Be Vietnam Pro', 'Helvetica Neue', sans-serif;
+  }
+
+  body {
+    background-color: var(--color-parchment);
+    color: var(--color-ink);
+    font-family: 'Be Vietnam Pro', 'Helvetica Neue', sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Cormorant Garamond', Georgia, serif;
   }
 }
 
-/* Custom scrollbar matching Vietnamese lacquer & ivory theme */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom scrollbar matching HoaLang parchment & bronze theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f8f4ec;
+  background: #F5F0E8;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #0f4c3a;
-  border-radius: 4px;
+  background: #D4C9B5;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #115e59;
+  background: #7A5C2E;
 }

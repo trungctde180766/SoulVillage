@@ -1,82 +1,89 @@
 import React from 'react';
 import { Compass, Sparkles, Terminal } from 'lucide-react';
+import { SectionLabel, OrnamentDivider, TagBadge } from './components/shared';
+import { useTranslations } from './lib/i18n';
 
 export const App: React.FC = () => {
+  const t = useTranslations('vi');
+
   return (
-    <div className="min-h-screen bg-ivory-100 text-stone-800 flex flex-col justify-between font-sans selection:bg-terracotta-200 selection:text-terracotta-900">
+    <div className="min-h-screen bg-parchment text-ink flex flex-col justify-between font-body selection:bg-gold/20 selection:text-charcoal">
       {/* Header */}
-      <header className="border-b border-stone-200/80 bg-white/90 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <header className="border-b border-stone bg-parchment/92 backdrop-blur-md sticky top-0 z-40">
+        <div className="max-w-content mx-auto px-5 sm:px-10 h-18 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-xl bg-primary-900 flex items-center justify-center text-ivory-100 shadow-sm">
-              <Compass className="w-5 h-5 text-ochre-400" />
+            <div className="w-9 h-9 rounded-sm bg-charcoal border border-stone flex items-center justify-center text-gold">
+              <Compass className="w-4 h-4 text-gold" />
             </div>
-            <div>
-              <span className="font-serif font-bold text-lg text-primary-950">Hồn Làng</span>
-              <span className="ml-2 text-[10px] uppercase tracking-wider px-2 py-0.5 bg-stone-100 text-stone-600 font-semibold rounded-md border border-stone-200">
-                Starter Template
+            <div className="flex items-center gap-2.5">
+              <span className="font-display font-semibold text-2xl text-charcoal tracking-tight">
+                {t.brand.name}
               </span>
+              <TagBadge variant="gold">HoaLang v1.0</TagBadge>
             </div>
           </div>
-          <div className="flex items-center space-x-2 text-xs">
-            <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse" />
-              DevFest 2026 Ready
-            </span>
+          <div className="flex items-center space-x-2">
+            <TagBadge variant="stone">{t.brand.starterBadge}</TagBadge>
           </div>
         </div>
       </header>
 
       {/* Main Starter Hero & Team Tasks Matrix */}
-      <main className="max-w-4xl mx-auto px-4 py-16 text-center space-y-8 flex-grow flex flex-col justify-center">
-        <div className="space-y-4">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-xs font-semibold text-amber-900">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>Bộ Khung Kỹ Thuật Tối Giản (0% Business Logic)</span>
+      <main className="max-w-content mx-auto px-5 sm:px-10 py-16 text-center space-y-10 flex-grow flex flex-col justify-center">
+        <div className="space-y-4 max-w-3xl mx-auto">
+          <div className="flex justify-center">
+            <SectionLabel>{t.starter.sectionLabel}</SectionLabel>
           </div>
-          <h1 className="font-serif text-3xl sm:text-5xl font-extrabold text-primary-950 tracking-tight leading-tight">
-            Hồn Làng — Bản Đồ Văn Hóa Sống
+          <h1 className="font-display text-display-xl text-charcoal tracking-tight">
+            {t.starter.heroTitle}
           </h1>
-          <p className="max-w-2xl mx-auto text-sm sm:text-base text-stone-600 leading-relaxed">
-            Môi trường kỹ thuật sẵn sàng: React 19, Vite, TypeScript, Tailwind CSS và Google Cloud Run. Toàn bộ tính năng nghiệp vụ văn hóa, Gemini AI và Hộ chiếu sẽ được lập trình trong 270 phút thi đấu.
+          <p className="font-body text-body-lg text-ink/85">
+            {t.starter.heroSubtitle}
           </p>
         </div>
 
-        {/* 3 Member Task Assignment Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left pt-4">
-          <div className="p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-primary-100 text-primary-900 flex items-center justify-center font-bold text-xs">
-              TV1
+        <OrnamentDivider />
+
+        {/* 3 Member Task Assignment Overview (Asymmetric Editorial Grid: 5 / 4 / 3 cols on lg) */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 text-left">
+          <article className="md:col-span-5 p-6 rounded-sm bg-cream border border-stone transition-transform transition-shadow duration-300 ease-out-expo hover:-translate-y-[5px] hover:shadow-hover space-y-3">
+            <div className="flex items-center justify-between">
+              <TagBadge variant="lacquer">{t.starter.tv1Label}</TagBadge>
+              <Compass className="w-4 h-4 text-gold" />
             </div>
-            <h3 className="font-serif font-bold text-sm text-primary-950">Trưởng Nhóm & Explore</h3>
-            <p className="text-xs text-stone-500">Quản lý main, Explore UI, Chi tiết địa điểm, Cloud Run deployment.</p>
-          </div>
-          <div className="p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-terracotta-100 text-terracotta-900 flex items-center justify-center font-bold text-xs">
-              TV2
+            <h2 className="font-display text-display-md text-charcoal">{t.starter.tv1Title}</h2>
+            <p className="font-body text-body-sm text-ash">{t.starter.tv1Desc}</p>
+          </article>
+
+          <article className="md:col-span-4 p-6 rounded-sm bg-cream border border-stone transition-transform transition-shadow duration-300 ease-out-expo hover:-translate-y-[5px] hover:shadow-hover space-y-3">
+            <div className="flex items-center justify-between">
+              <TagBadge variant="gold">{t.starter.tv2Label}</TagBadge>
+              <Sparkles className="w-4 h-4 text-gold" />
             </div>
-            <h3 className="font-serif font-bold text-sm text-primary-950">Gemini AI Journey</h3>
-            <p className="text-xs text-stone-500">Prompt Engineering cho Gemini 2.5 Flash, API tạo hành trình và timeline UI.</p>
-          </div>
-          <div className="p-5 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-2">
-            <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-900 flex items-center justify-center font-bold text-xs">
-              TV3
+            <h2 className="font-display text-display-md text-charcoal">{t.starter.tv2Title}</h2>
+            <p className="font-body text-body-sm text-ash">{t.starter.tv2Desc}</p>
+          </article>
+
+          <article className="md:col-span-3 p-6 rounded-sm bg-cream border border-stone transition-transform transition-shadow duration-300 ease-out-expo hover:-translate-y-[5px] hover:shadow-hover space-y-3">
+            <div className="flex items-center justify-between">
+              <TagBadge variant="stone">{t.starter.tv3Label}</TagBadge>
             </div>
-            <h3 className="font-serif font-bold text-sm text-primary-950">Dữ Liệu & Hộ Chiếu</h3>
-            <p className="text-xs text-stone-500">Khảo sát 8-12 địa điểm văn hóa Huế, Quiz di sản và hệ thống huy hiệu.</p>
-          </div>
+            <h2 className="font-display text-display-md text-charcoal">{t.starter.tv3Title}</h2>
+            <p className="font-body text-body-sm text-ash">{t.starter.tv3Desc}</p>
+          </article>
         </div>
 
         {/* Quick Instructions & Documentation Note */}
-        <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 text-xs text-stone-600 max-w-xl mx-auto flex items-center justify-center space-x-2">
-          <Terminal className="w-4 h-4 text-stone-500 flex-shrink-0" />
-          <span>Mã nguồn tham khảo & đặc tả kỹ thuật: Xem tại <code>docs/WEB_SPECIFICATIONS.md</code></span>
+        <div className="p-4 rounded-sm bg-cream border border-stone text-caption text-ash max-w-2xl mx-auto flex items-center justify-center space-x-2.5">
+          <Terminal className="w-4 h-4 text-gold shrink-0" />
+          <span>{t.starter.contractNote}</span>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-stone-200/80 bg-white py-6 text-center text-xs text-stone-500">
-        <p>© 2026 Hồn Làng (SoulVillage). GDG DevFest MienTrung 2026 Hackathon Starter.</p>
+      <footer className="border-t border-stone/30 bg-charcoal py-8 text-center text-caption text-cream/80 space-y-1">
+        <p>{t.footer.copyright}</p>
+        <p className="text-[11px] uppercase tracking-[0.15em] text-gold">{t.footer.motto}</p>
       </footer>
     </div>
   );

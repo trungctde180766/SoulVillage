@@ -27,7 +27,7 @@ export interface JourneyItinerary {
   stops: JourneyStop[];
   totalEstimatedCostVND: string;
   culturalHighlights: string[];
-  isFallback?: boolean;
+  isFallback: boolean;
   generatedAt: string;
 }
 

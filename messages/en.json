@@ -1,0 +1,91 @@
+{
+  "brand": {
+    "name": "SoulVillage",
+    "englishName": "SoulVillage × HoaLang",
+    "tagline": "Living Cultural Atlas of Vietnam",
+    "edition": "Imperial Hue Heritage Editorial",
+    "starterBadge": "HoaLang UI v1.0 Baseline Ready"
+  },
+  "nav": {
+    "explore": "Explore Heritage",
+    "journey": "AI Journey",
+    "passport": "Cultural Passport",
+    "language": "Language"
+  },
+  "starter": {
+    "sectionLabel": "Technical Foundation & Editorial Design System",
+    "heroTitle": "SoulVillage — Living Cultural Atlas",
+    "heroSubtitle": "A luxury editorial gallery celebrating the craft villages and heritage of Imperial Hue. Contract v1, HoaLang Design Tokens, and API integration points are ready.",
+    "tv1Label": "Member 01 · Team Lead",
+    "tv1Title": "Heritage Explore & Cloud Run",
+    "tv1Desc": "HoaLang UI architecture, asymmetric Explore grid, editorial Place Detail page, and Google Cloud Run deployment.",
+    "tv2Label": "Member 02 · Artificial Intelligence",
+    "tv2Title": "Gemini Personalized Journey",
+    "tv2Desc": "Intelligent cultural itinerary generation powered by Google Gemini 2.5 Flash, schema validation, and transparent fallback.",
+    "tv3Label": "Member 03 · Cultural Depth",
+    "tv3Title": "Heritage Catalog & Passport",
+    "tv3Desc": "Curated Hue craft villages with verified citations, cultural heritage quiz challenges, and imperial seal badges.",
+    "contractNote": "Technical contracts & file ownership: See docs/TEAM_CONTRACTS.md and docs/FILE_OWNERS.md"
+  },
+  "explore": {
+    "sectionLabel": "Explore Heritage",
+    "title": "Artisanal Villages & Imperial Monuments",
+    "subtitle": "Each craft village is a living chapter of memory preserved through generations of master artisans in Hue.",
+    "searchPlaceholder": "Search craft villages, artisans, pagodas, monuments...",
+    "categories": {
+      "all": "All Heritage",
+      "craft": "Traditional Crafts",
+      "monument": "Historical Monuments",
+      "cuisine": "Local Cuisine",
+      "spiritual": "Spiritual & Pagodas",
+      "nature": "Scenic Nature"
+    },
+    "loading": "Opening the heritage editorial...",
+    "empty": "No cultural places match the selected filter.",
+    "retry": "Reset Filters",
+    "visitTime": "Estimated visit time"
+  },
+  "placeDetail": {
+    "sectionLabel": "Imperial Heritage",
+    "storyHeading": "Cultural & Historical Narrative",
+    "craftHeading": "Artisanal Mastery & Craft Details",
+    "tipsHeading": "Local Insights & Tips",
+    "sourcesHeading": "Historical Sources & Citations",
+    "planJourneyCta": "Curate Journey With Gemini",
+    "backToExplore": "Back To Explore",
+    "notFound": "Cultural heritage place not found."
+  },
+  "journey": {
+    "sectionLabel": "Cultural Journey",
+    "title": "Personalized Heritage Itinerary",
+    "subtitle": "Craft a bespoke cultural exploration tailored to your pace and artistic interests.",
+    "formTitle": "Configure Your Journey",
+    "durationLabel": "Duration (Hours)",
+    "interestsLabel": "Cultural Interests",
+    "startLocationLabel": "Starting Point",
+    "startLocationPlaceholder": "e.g., Hue Imperial Citadel, Truong Tien Bridge...",
+    "paceLabel": "Exploration Pace",
+    "companionLabel": "Traveling With",
+    "submitCta": "Generate AI Itinerary",
+    "submitting": "Curating With Gemini...",
+    "geminiBadge": "Curated By Google Gemini",
+    "fallbackBadge": "Local Curated Fallback",
+    "saveCta": "Save Itinerary",
+    "savedBadge": "Saved To Passport"
+  },
+  "passport": {
+    "sectionLabel": "Heritage Dossier",
+    "title": "Imperial Cultural Passport",
+    "subtitle": "Preserve your journey milestones, complete cultural quizzes, and collect imperial heritage seals on this device.",
+    "pointsLabel": "Heritage Points Accumulated",
+    "badgesHeading": "Imperial Seals & Cultural Badges",
+    "quizSectionLabel": "Heritage Challenge",
+    "quizSubmitCta": "Confirm Answer",
+    "quizNextCta": "Next Question",
+    "localStorageNote": "Stored on this device"
+  },
+  "footer": {
+    "copyright": "© 2026 SoulVillage × HoaLang. GDG DevFest MienTrung Digital Heritage Publication.",
+    "motto": "Luxury Editorial × Vietnamese Cultural Depth"
+  }
+}

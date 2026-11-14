@@ -13,8 +13,8 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <div
-      className={`bg-white rounded-2xl border border-stone-200/80 shadow-soft overflow-hidden transition-all duration-300 ${
-        hoverable ? 'hover:-translate-y-1 hover:shadow-card hover:border-primary-600/30' : ''
+      className={`bg-cream rounded-sm border border-stone overflow-hidden transition-transform transition-shadow duration-300 ease-out-expo ${
+        hoverable ? 'hover:-translate-y-[5px] hover:shadow-hover' : ''
       } ${className}`}
       {...props}
     >
@@ -22,4 +22,3 @@ export const Card: React.FC<CardProps> = ({
     </div>
   );
 };
-

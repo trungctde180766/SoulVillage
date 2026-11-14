@@ -23,12 +23,13 @@ ENV PORT=8080
 COPY package*.json ./
 RUN npm ci --omit=dev
 
-# Sao chép bản build frontend và server runner
+# Sao chép bản build frontend, dữ liệu tĩnh public/, module backend server/ và server runner
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/server ./server
 COPY server.js ./
 
 # Cloud Run tự động inject biến PORT (mặc định 8080)
 EXPOSE 8080
 
 CMD ["node", "server.js"]
-

@@ -1,0 +1,91 @@
+{
+  "brand": {
+    "name": "Hồn Làng",
+    "englishName": "SoulVillage × HoaLang",
+    "tagline": "Bản Đồ Văn Hóa Sống Việt Nam",
+    "edition": "Ấn Phẩm Nghệ Thuật Di Sản Cố Đô",
+    "starterBadge": "Khung Khởi Tạo Chuẩn HoaLang UI v1.0"
+  },
+  "nav": {
+    "explore": "Khám Phá Di Sản",
+    "journey": "Hành Trình AI",
+    "passport": "Hộ Chiếu Văn Hóa",
+    "language": "Ngôn Ngữ"
+  },
+  "starter": {
+    "sectionLabel": "Nền Tảng Kỹ Thuật & Quy Chuẩn Thiết Kế",
+    "heroTitle": "Hồn Làng — Bản Đồ Văn Hóa Sống",
+    "heroSubtitle": "Không gian tạp chí nghệ thuật tôn vinh di sản cố đô Huế. Hệ thống hợp đồng dữ liệu v1, Design Tokens HoaLang và điểm nối API đã sẵn sàng cho ba thành viên.",
+    "tv1Label": "Thành Viên 01 · Trưởng Nhóm",
+    "tv1Title": "Khám Phá Di Sản & Cloud Run",
+    "tv1Desc": "Kiến trúc HoaLang UI, trang Khám phá bất đối xứng, trang Chi tiết phóng sự và triển khai Google Cloud Run.",
+    "tv2Label": "Thành Viên 02 · Trí Tuệ Nhân Tạo",
+    "tv2Title": "Hành Trình Cá Nhân Hóa Gemini",
+    "tv2Desc": "Thiết kế lộ trình thông minh bằng Google Gemini 2.5 Flash, kiểm định schema và cơ chế dự phòng minh bạch.",
+    "tv3Label": "Thành Viên 03 · Chiều Sâu Văn Hóa",
+    "tv3Title": "Danh Mục Di Sản & Hộ Chiếu",
+    "tv3Desc": "Biên khảo làng nghề truyền thống Huế có trích dẫn nguồn, thử thách Quiz văn hóa và ấn triện di sản.",
+    "contractNote": "Hợp đồng kỹ thuật & phân quyền: Xem tại docs/TEAM_CONTRACTS.md và docs/FILE_OWNERS.md"
+  },
+  "explore": {
+    "sectionLabel": "Khám Phá Di Sản",
+    "title": "Tinh Hoa Làng Nghề & Di Tích Cố Đô",
+    "subtitle": "Mỗi làng nghề là một chương ký ức sống động được gìn giữ qua bàn tay tài hoa của bao thế hệ nghệ nhân xứ Huế.",
+    "searchPlaceholder": "Tìm kiếm làng nghề, nghệ nhân, cổ tự, di sản...",
+    "categories": {
+      "all": "Tất Cả Di Sản",
+      "craft": "Làng Nghề Thủ Công",
+      "monument": "Di Tích Lịch Sử",
+      "cuisine": "Ẩm Thực Bản Địa",
+      "spiritual": "Tâm Linh & Cổ Tự",
+      "nature": "Cảnh Quan Sinh Thái"
+    },
+    "loading": "Đang mở trang ấn phẩm di sản...",
+    "empty": "Chưa tìm thấy địa điểm phù hợp với bộ lọc hiện tại.",
+    "retry": "Đặt Lại Bộ Lọc",
+    "visitTime": "Thời lượng tham quan"
+  },
+  "placeDetail": {
+    "sectionLabel": "Di Sản Cố Đô",
+    "storyHeading": "Câu Chuyện Văn Hóa & Lịch Sử",
+    "craftHeading": "Bí Quyết Kỹ Nghệ Thủ Công",
+    "tipsHeading": "Lời Khuyên Bản Địa",
+    "sourcesHeading": "Tư Liệu & Nguồn Tham Khảo",
+    "planJourneyCta": "Lên Hành Trình Cùng Gemini",
+    "backToExplore": "Quay Lại Khám Phá",
+    "notFound": "Không tìm thấy địa điểm di sản này."
+  },
+  "journey": {
+    "sectionLabel": "Hành Trình Văn Hóa",
+    "title": "Hành Trình Di Sản Cá Nhân Hóa",
+    "subtitle": "Khởi tạo lộ trình du khảo nghệ thuật được thiết kế riêng theo nhịp điệu và mối quan tâm văn hóa của bạn.",
+    "formTitle": "Thiết Lập Hành Trình",
+    "durationLabel": "Thời Lượng Du Khảo (Giờ)",
+    "interestsLabel": "Lĩnh Vực Quan Tâm",
+    "startLocationLabel": "Điểm Khởi Hành",
+    "startLocationPlaceholder": "Ví dụ: Đại Nội Huế, Cầu Trường Tiền...",
+    "paceLabel": "Nhịp Độ Trải Nghiệm",
+    "companionLabel": "Đồng Hành Cùng",
+    "submitCta": "Khởi Tạo Hành Trình AI",
+    "submitting": "Đang Khởi Tạo Bằng Gemini...",
+    "geminiBadge": "Khởi Tạo Bởi Google Gemini",
+    "fallbackBadge": "Gợi Ý Cục Bộ Dự Phòng",
+    "saveCta": "Lưu Hành Trình",
+    "savedBadge": "Đã Lưu Vào Hộ Chiếu"
+  },
+  "passport": {
+    "sectionLabel": "Hồ Sơ Di Sản",
+    "title": "Hộ Chiếu Văn Hóa Cố Đô",
+    "subtitle": "Lưu giữ dấu ấn hành trình, thử thách tri thức và sưu tập ấn triện di sản trên thiết bị của bạn.",
+    "pointsLabel": "Điểm Tích Lũy Di Sản",
+    "badgesHeading": "Bộ Sưu Tập Ấn Triện & Huy Hiệu",
+    "quizSectionLabel": "Thử Thách Di Sản",
+    "quizSubmitCta": "Xác Nhận Đáp Án",
+    "quizNextCta": "Câu Hỏi Tiếp Theo",
+    "localStorageNote": "Lưu trên thiết bị này"
+  },
+  "footer": {
+    "copyright": "© 2026 Hồn Làng (SoulVillage × HoaLang). Ấn phẩm văn hóa số GDG DevFest Miền Trung.",
+    "motto": "Luxury Editorial × Vietnamese Cultural Depth"
+  }
+}
