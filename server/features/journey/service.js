@@ -4,12 +4,13 @@ import {
   sanitizeStartLocation,
 } from './validator.js';
 
-export const DEFAULT_GEMINI_MODEL = 'gemini-4-hydrogen';
-export const FALLBACK_GEMINI_MODELS = [
-  'gemini-4-hydrogen',
-  'gemini-3.5-flash-lite',
-  'gemini-3.8-flash',
-];
+/**
+ * Models tried in order after GEMINI_MODEL. Measured with the 11-place catalog (10.7k-char prompt):
+ * gemini-3.5-flash-lite ~2s valid, gemini-3.5-flash ~14s valid, gemini-3.8-flash hung past 60s.
+ */
+export const FALLBACK_GEMINI_MODELS = ['gemini-3.5-flash-lite', 'gemini-3.5-flash'];
+/** A non-final attempt may use at most this much of the budget, leaving room for the next model. */
+export const ATTEMPT_TIMEOUT_MS = 12000;
 export const DEFAULT_TIMEOUT_MS = 20000;
 export const TRANSIT_BUFFER_MINUTES = 20;
 
@@ -158,15 +159,19 @@ export async function defaultCallGeminiText({
       ]
     : FALLBACK_GEMINI_MODELS;
 
-  // One deadline for the whole chain: per-model timeouts would let 3 models take up to 60s.
+  // One deadline for the whole chain; each non-final attempt is also capped so a slow
+  // model cannot consume the entire budget and leave nothing for the next one.
   const deadline = AbortSignal.timeout(timeoutMs);
   let lastErr;
-  for (const model of candidateModels) {
+  for (const [index, model] of candidateModels.entries()) {
     if (deadline.aborted) break;
+    const isLast = index === candidateModels.length - 1;
     const config = {
       responseMimeType: 'application/json',
       responseJsonSchema: ITINERARY_RESPONSE_JSON_SCHEMA,
-      abortSignal: deadline,
+      abortSignal: isLast
+        ? deadline
+        : AbortSignal.any([deadline, AbortSignal.timeout(ATTEMPT_TIMEOUT_MS)]),
     };
 
     if (model.startsWith('gemini-4') || model.startsWith('gemini-3.5')) {

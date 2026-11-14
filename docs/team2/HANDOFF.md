@@ -10,7 +10,7 @@
 
 ### Backend (`server/features/journey/`)
 - `router.js`: Express router xử lý `POST /api/itinerary`, nhận `getPlaces` injected từ server.js.
-- `service.js`: Tích hợp `@google/genai` v3 với chuỗi model dự phòng (`GEMINI_MODEL` → `gemini-4-hydrogen` → `gemini-3.5-flash-lite` → `gemini-3.8-flash`) dùng **chung một hạn 20s** cho cả chuỗi; quá hạn/429/sai schema → thuật toán greedy-packing cục bộ (`isFallback: true`). Prompt nhấn mạnh người đồng hành (solo/couple/family/friends) và nhịp điệu (relaxed/moderate/intensive).
+- `service.js`: Tích hợp `@google/genai` v3 với chuỗi model `GEMINI_MODEL` → `gemini-3.5-flash-lite` → `gemini-3.5-flash`. Cả chuỗi dùng **chung một hạn 20s**; mỗi lần thử không phải cuối cùng bị giới hạn thêm 12s để model chậm không chiếm hết thời gian. Quá hạn/429/sai schema → thuật toán greedy-packing cục bộ (`isFallback: true`). Prompt nhấn mạnh người đồng hành (solo/couple/family/friends) và nhịp điệu (relaxed/moderate/intensive).
 - `validator.js`: Kiểm định chặt chẽ đầu vào (duration 2–8h, categories, max 3 selected IDs) và bóc tách schema đầu ra, đối chiếu placeId với catalog, ghi đè placeName từ catalog.
 - `test/fixtures.json`: Bộ dữ liệu 3 địa điểm Huế độc lập dùng để test offline.
 - `test/journey.test.js`: 18 unit tests tự động chạy bằng `node:test` (100% pass).
@@ -33,8 +33,9 @@
 | **Backend Syntax** | `node --check server/features/journey/*.js` | **0 errors** |
 | **TypeScript & Build** | `npm run build` | **Passed** |
 | **Linter** | `npm run lint` | **Passed** (`oxlint`) |
-| **Live Gemini (local)** | `curl POST /api/itinerary` với key thật trong `.env.local` | **200, `isFallback: false`**, 2 chặng, ~8–15s |
-| **Hạn chung 20s** | Gọi chuỗi model với `timeoutMs: 1500` | Hủy sau ~1.5s (không cộng dồn theo từng model) |
+| **Live Gemini (catalog thật TV3, 11 địa điểm)** | `curl POST /api/itinerary` với key thật, `GEMINI_MODEL=gemini-3.5-flash-lite` | **200, `isFallback: false`**, ~2.5–3s; ID ưu tiên `lang-gom-phuoc-tich` được giữ ở chặng 1 |
+| **Model chính bị treo** | Ép model đầu là `gemini-3.8-flash` | Bị cắt ở 12s, `gemini-3.5-flash-lite` trả kết quả → vẫn `isFallback: false` (~15s) |
+| **Hạn chung 20s** | Gọi chuỗi model với `timeoutMs: 1500` | Hủy sau ~1.5s |
 | **Request sai** | `durationHours: 99` | **400 `INVALID_REQUEST`** |
 | **Mobile** | Ảnh chụp 390px của bản dựng | Đã xem ở 390px; **chưa** kiểm thử đủ 360/430px và chưa thử trên điện thoại thật |
 | **Cloud Run** | — | **Chưa kiểm chứng** — chờ TV1 deploy |
@@ -63,11 +64,11 @@
 | Biến | Bắt buộc | Ghi chú |
 | :--- | :--- | :--- |
 | `GEMINI_API_KEY` | Có | Gắn qua Secret Manager; thiếu → `503 AI_NOT_CONFIGURED`. |
-| `GEMINI_MODEL` | Không | Model thử đầu tiên. Key hiện tại chạy ổn với `gemini-3.5-flash`; `gemini-2.5-flash` đã bị Google ngừng cho người dùng mới (404). |
-| `ALLOW_FIXTURE_CATALOG` | Không | Chỉ dùng khi demo lúc catalog TV3 còn rỗng: `true` → dùng `test/fixtures.json` thay vì trả `503 DATA_NOT_READY`. Bỏ biến này khi `public/data/places.json` đã có dữ liệu. |
+| `GEMINI_MODEL` | Nên đặt | **`gemini-3.5-flash-lite`** (đo ~2s với catalog 11 địa điểm). `gemini-3.5-flash` hợp lệ nhưng ~14s; `gemini-3.8-flash` từng treo >60s; `gemini-2.5-flash` đã bị Google ngừng cho người dùng mới (404). |
+| `ALLOW_FIXTURE_CATALOG` | Không | **Không đặt trên production.** Catalog TV3 đã có dữ liệu; biến này chỉ dùng để test offline với `test/fixtures.json`. |
 
 ## 5. Hạn Chế Còn Lại
 
-- `GET /api/places` (TV3) vẫn trả 501 → frontend không xác minh được `placeId` trước khi gửi; server vẫn chặn ID lạ bằng 400.
+- Chưa so sánh chất lượng nội dung giữa `gemini-3.5-flash-lite` và `gemini-3.5-flash`; đổi model chỉ cần sửa `GEMINI_MODEL`, nhưng `gemini-3.5-flash` (~14s) gần chạm hạn 20s.
 - Thời gian di chuyển giữa các chặng là ước lượng (15–20 phút), chưa có dữ liệu định tuyến.
 - Hành trình chỉ lưu trên thiết bị (`localStorage`), không đồng bộ.
