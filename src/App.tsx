@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   HashRouter,
   Navigate,
@@ -144,18 +144,6 @@ const PassportIntegrationView: React.FC = () => {
 };
 
 export const App: React.FC = () => {
-  useEffect(() => {
-    // Nếu người dùng mở trực tiếp pathname như /places/id hoặc /journey?placeId=id (không có #), đồng bộ sang HashRouter
-    if (
-      typeof window !== 'undefined' &&
-      window.location.pathname !== '/' &&
-      !window.location.hash
-    ) {
-      const targetHash = `#${window.location.pathname}${window.location.search}`;
-      window.history.replaceState(null, '', `/${targetHash}`);
-    }
-  }, []);
-
   return (
     <LocaleProvider>
       <AuthProvider>

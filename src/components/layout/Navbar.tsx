@@ -83,7 +83,7 @@ export const Navbar: React.FC = () => {
           : 'bg-transparent border-b border-cream/15 text-cream'
       }`}
     >
-      <div className="max-w-content mx-auto px-5 sm:px-10 h-18 flex items-center justify-between gap-4">
+      <div className="max-w-content mx-auto px-5 sm:px-10 h-18 flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand Logo */}
         <Link
           to="/"
@@ -91,17 +91,19 @@ export const Navbar: React.FC = () => {
           className="inline-flex items-center gap-3 min-h-[44px] focus:outline-none shrink-0"
         >
           <span
-            className={`font-display font-semibold text-[26px] leading-none tracking-tight transition-colors duration-300 ${
+            className={`font-display font-semibold text-[22px] sm:text-[26px] leading-none tracking-tight transition-colors duration-300 ${
               isSolidSurface ? 'text-charcoal' : 'text-cream'
             }`}
           >
             {t.brand.name}
           </span>
-          <TagBadge variant="gold">HoaLang</TagBadge>
+          <span className="hidden sm:inline-flex">
+            <TagBadge variant="gold">HoaLang</TagBadge>
+          </span>
         </Link>
 
         {/* Desktop Navigation Links & Identity Bar */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-8">
+        <div className="hidden lg:flex items-center gap-6 lg:gap-8">
           {navLinks.map((link) => {
             const active = isActive(link.to);
             return (
@@ -188,11 +190,11 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Controls (Identity/Login + Language + Hamburger) */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex lg:hidden shrink-0 items-center gap-2">
           <Link
             to="/auth"
             onClick={() => setOpenMenuRouteKey(null)}
-            className={`inline-flex items-center justify-center min-h-[44px] px-2.5 rounded-xs border font-body text-[11px] font-semibold uppercase tracking-[0.08em] ${
+            className={`inline-flex items-center justify-center min-h-[44px] px-2.5 whitespace-nowrap rounded-xs border font-body text-[11px] font-semibold uppercase tracking-[0.08em] ${
               isAuthenticated && user
                 ? 'bg-lacquer text-cream border-gold'
                 : isSolidSurface
@@ -234,7 +236,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Dropdown Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-parchment border-b border-stone px-5 py-4 space-y-2.5 shadow-hover">
+        <div className="lg:hidden bg-parchment border-b border-stone px-5 py-4 space-y-2.5 shadow-hover">
           {/* Active Identity Card inside Mobile Drawer */}
           {isAuthenticated && user ? (
             <div className="p-3.5 bg-cream border border-stone rounded-sm flex items-center justify-between gap-3">

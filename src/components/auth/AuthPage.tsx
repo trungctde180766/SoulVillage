@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+  Award,
+  BookOpen,
   CheckCircle2,
+  Compass,
   Eye,
   EyeOff,
   LogIn,
   LogOut,
-  ShieldCheck,
   Sparkles,
   UserCheck,
   UserPlus,
@@ -28,16 +30,7 @@ type AuthTabMode = 'login' | 'register' | 'profile';
 export const AuthPage: React.FC = () => {
   const navigate = useNavigate();
   const t = useTranslations();
-  const {
-    user,
-    isAuthenticated,
-    demoAccounts,
-    login,
-    register,
-    quickSwitchDemo,
-    updateProfile,
-    logout,
-  } = useAuth();
+  const { user, isAuthenticated, login, register, updateProfile, logout } = useAuth();
 
   const [activeTab, setActiveTab] = useState<AuthTabMode>(() =>
     isAuthenticated ? 'profile' : 'login'
@@ -114,21 +107,6 @@ export const AuthPage: React.FC = () => {
     }
   };
 
-  const handleQuickDemoLogin = async (email: string) => {
-    setErrorMsg(null);
-    setSuccessMsg(null);
-    setSubmitting(true);
-    try {
-      const switchedUser = await quickSwitchDemo(email);
-      syncProfileDraft(switchedUser);
-      setActiveTab('profile');
-    } catch (err) {
-      setErrorMsg(err instanceof Error ? err.message : 'Chuyển danh tính thất bại.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
@@ -160,9 +138,25 @@ export const AuthPage: React.FC = () => {
     { id: 'visitor', label: t.auth.roles.visitor },
     { id: 'artisan', label: t.auth.roles.artisan },
     { id: 'scholar', label: t.auth.roles.scholar },
-    { id: 'tv1_lead', label: t.auth.roles.tv1_lead },
-    { id: 'tv2_ai', label: t.auth.roles.tv2_ai },
-    { id: 'tv3_curator', label: t.auth.roles.tv3_curator },
+    { id: 'collector', label: t.auth.roles.collector },
+  ];
+
+  const privileges = [
+    {
+      icon: Sparkles,
+      title: t.auth.privilegeItem1Title,
+      desc: t.auth.privilegeItem1Desc,
+    },
+    {
+      icon: Award,
+      title: t.auth.privilegeItem2Title,
+      desc: t.auth.privilegeItem2Desc,
+    },
+    {
+      icon: BookOpen,
+      title: t.auth.privilegeItem3Title,
+      desc: t.auth.privilegeItem3Desc,
+    },
   ];
 
   return (
@@ -197,39 +191,43 @@ export const AuthPage: React.FC = () => {
       <div className="max-w-content mx-auto px-5 sm:px-10 py-12 sm:py-16 space-y-10">
         {/* Mode Switcher Tabs */}
         <div className="flex flex-wrap items-center gap-3 border-b border-stone pb-4">
-          <button
-            type="button"
-            onClick={() => {
-              setErrorMsg(null);
-              setSuccessMsg(null);
-              setActiveTab('login');
-            }}
-            className={`inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-sm border font-body text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors duration-300 ${
-              activeTab === 'login'
-                ? 'bg-lacquer text-cream border-lacquer'
-                : 'bg-cream text-ink border-stone hover:border-bronze'
-            }`}
-          >
-            <LogIn className="w-4 h-4" />
-            <span>{t.auth.tabLogin}</span>
-          </button>
+          {!user && (
+            <>
+              <button
+                type="button"
+                onClick={() => {
+                  setErrorMsg(null);
+                  setSuccessMsg(null);
+                  setActiveTab('login');
+                }}
+                className={`inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-sm border font-body text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors duration-300 ${
+                  activeTab === 'login'
+                    ? 'bg-lacquer text-cream border-lacquer'
+                    : 'bg-cream text-ink border-stone hover:border-bronze'
+                }`}
+              >
+                <LogIn className="w-4 h-4" />
+                <span>{t.auth.tabLogin}</span>
+              </button>
 
-          <button
-            type="button"
-            onClick={() => {
-              setErrorMsg(null);
-              setSuccessMsg(null);
-              setActiveTab('register');
-            }}
-            className={`inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-sm border font-body text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors duration-300 ${
-              activeTab === 'register'
-                ? 'bg-lacquer text-cream border-lacquer'
-                : 'bg-cream text-ink border-stone hover:border-bronze'
-            }`}
-          >
-            <UserPlus className="w-4 h-4" />
-            <span>{t.auth.tabRegister}</span>
-          </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setErrorMsg(null);
+                  setSuccessMsg(null);
+                  setActiveTab('register');
+                }}
+                className={`inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-sm border font-body text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors duration-300 ${
+                  activeTab === 'register'
+                    ? 'bg-lacquer text-cream border-lacquer'
+                    : 'bg-cream text-ink border-stone hover:border-bronze'
+                }`}
+              >
+                <UserPlus className="w-4 h-4" />
+                <span>{t.auth.tabRegister}</span>
+              </button>
+            </>
+          )}
 
           {user && (
             <button
@@ -240,11 +238,7 @@ export const AuthPage: React.FC = () => {
                 syncProfileDraft(user);
                 setActiveTab('profile');
               }}
-              className={`inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-sm border font-body text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors duration-300 ${
-                activeTab === 'profile'
-                  ? 'bg-lacquer text-cream border-lacquer'
-                  : 'bg-cream text-ink border-stone hover:border-bronze'
-              }`}
+              className="inline-flex items-center gap-2 min-h-[44px] px-5 py-2.5 rounded-sm border bg-lacquer text-cream border-lacquer font-body text-[12px] font-semibold uppercase tracking-[0.12em]"
             >
               <UserCheck className="w-4 h-4" />
               <span>{t.auth.tabProfile}</span>
@@ -252,7 +246,7 @@ export const AuthPage: React.FC = () => {
           )}
         </div>
 
-        {/* Asymmetric 12-Column Layout (7 cols Auth/Profile Form + 5 cols Quick Team Identity Switch) */}
+        {/* Asymmetric 12-Column Editorial Layout (7 cols Auth/Profile Form + 5 cols Member Privileges) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* Left Column (7 cols): Login / Register / Active Profile */}
           <div className="lg:col-span-7 bg-cream border border-stone rounded-sm p-6 sm:p-10 space-y-6">
@@ -392,7 +386,7 @@ export const AuthPage: React.FC = () => {
                   onChange={(e) => setRegEmail(e.target.value)}
                 />
 
-                {/* Cultural Role Selection Chips */}
+                {/* Authentic Cultural Persona Selection */}
                 <div className="space-y-2">
                   <label className="block font-body text-[11px] font-semibold uppercase tracking-[0.15em] text-ash">
                     {t.auth.roleLabel}
@@ -428,15 +422,33 @@ export const AuthPage: React.FC = () => {
                 />
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Input
-                    id="register-password"
-                    type={showPassword ? 'text' : 'password'}
-                    required
-                    label={t.auth.passwordLabel}
-                    placeholder={t.auth.passwordPlaceholder}
-                    value={regPassword}
-                    onChange={(e) => setRegPassword(e.target.value)}
-                  />
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label
+                        htmlFor="register-password"
+                        className="block font-body text-[11px] font-semibold uppercase tracking-[0.15em] text-ash"
+                      >
+                        {t.auth.passwordLabel}
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="inline-flex items-center gap-1 font-body text-[11px] uppercase tracking-[0.10em] text-bronze hover:text-lacquer"
+                      >
+                        {showPassword ? t.auth.hidePassword : t.auth.showPassword}
+                      </button>
+                    </div>
+                    <input
+                      id="register-password"
+                      type={showPassword ? 'text' : 'password'}
+                      required
+                      value={regPassword}
+                      onChange={(e) => setRegPassword(e.target.value)}
+                      placeholder={t.auth.passwordPlaceholder}
+                      className="w-full min-h-[44px] bg-parchment border border-stone py-3 px-4 rounded-sm text-base text-ink placeholder:text-ash focus:border-bronze focus:outline-none transition-colors duration-300"
+                    />
+                  </div>
+
                   <Input
                     id="register-confirm-password"
                     type={showPassword ? 'text' : 'password'}
@@ -515,7 +527,7 @@ export const AuthPage: React.FC = () => {
                       <dt className="text-label-sm uppercase text-ash">
                         {t.auth.memberIdLabel}
                       </dt>
-                      <dd className="text-ink font-medium mt-1">{user.id}</dd>
+                      <dd className="text-ink font-medium mt-1 break-all">{user.id}</dd>
                     </div>
                     <div className="p-3.5 bg-cream border border-stone rounded-sm">
                       <dt className="text-label-sm uppercase text-ash">
@@ -592,91 +604,54 @@ export const AuthPage: React.FC = () => {
             )}
           </div>
 
-          {/* Right Column (5 cols): 1-Click Team & Demo Identity Switcher */}
+          {/* Right Column (5 cols): Editorial Membership Privileges Card */}
           <aside className="lg:col-span-5 space-y-6">
             <div className="bg-cream border border-stone rounded-sm p-6 sm:p-8 space-y-6">
               <div className="space-y-2 border-b border-stone pb-4">
-                <SectionLabel>{t.auth.quickDemoLabel}</SectionLabel>
+                <SectionLabel>{t.auth.privilegeLabel}</SectionLabel>
                 <h3 className="font-display text-display-md text-charcoal">
-                  {t.auth.quickDemoHeading}
+                  {t.auth.privilegeHeading}
                 </h3>
                 <p className="font-body text-body-sm text-ash leading-relaxed">
-                  {t.auth.quickDemoDesc}
+                  {t.auth.privilegeDesc}
                 </p>
               </div>
 
               <div className="space-y-4">
-                {demoAccounts.map((demo) => {
-                  const isCurrent = user?.email.toLowerCase() === demo.email.toLowerCase();
+                {privileges.map((item, idx) => {
+                  const Icon = item.icon;
                   return (
                     <div
-                      key={demo.id}
-                      className={`p-5 rounded-sm border transition-all duration-300 space-y-3 ${
-                        isCurrent
-                          ? 'bg-gold/15 border-gold'
-                          : 'bg-parchment border-stone hover:border-bronze'
-                      }`}
+                      key={idx}
+                      className="p-5 rounded-sm bg-parchment border border-stone space-y-2"
                     >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={`w-10 h-10 rounded-xs border flex items-center justify-center font-display text-base font-bold shrink-0 ${
-                              isCurrent
-                                ? 'bg-lacquer text-cream border-gold'
-                                : 'bg-charcoal text-gold border-stone'
-                            }`}
-                          >
-                            {demo.avatarInitials}
-                          </div>
-                          <div>
-                            <h4 className="font-display text-xl text-charcoal leading-tight">
-                              {demo.fullName}
-                            </h4>
-                            <p className="font-body text-caption text-bronze">
-                              {demo.title}
-                            </p>
-                          </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xs bg-charcoal border border-stone flex items-center justify-center text-gold shrink-0">
+                          <Icon className="w-4 h-4 text-gold" />
                         </div>
-
-                        {isCurrent && (
-                          <TagBadge variant="gold">
-                            <span className="inline-flex items-center gap-1">
-                              <ShieldCheck className="w-3 h-3" />
-                              <span>{t.auth.activeAccountBadge}</span>
-                            </span>
-                          </TagBadge>
-                        )}
+                        <h4 className="font-display text-xl text-charcoal leading-tight">
+                          {item.title}
+                        </h4>
                       </div>
-
-                      <p className="font-body text-caption text-ash leading-relaxed">
-                        {demo.bio}
+                      <p className="font-body text-body-sm text-ash leading-relaxed">
+                        {item.desc}
                       </p>
-
-                      <div className="flex items-center justify-between pt-2 border-t border-stone/50">
-                        <span className="font-body text-[11px] text-ash">
-                          {demo.email}
-                        </span>
-                        <button
-                          type="button"
-                          disabled={submitting || isCurrent}
-                          onClick={() => handleQuickDemoLogin(demo.email)}
-                          className={`inline-flex items-center gap-1.5 min-h-[38px] px-3.5 py-1.5 rounded-xs border font-body text-[11px] font-semibold uppercase tracking-[0.10em] transition-colors duration-300 ${
-                            isCurrent
-                              ? 'border-gold/50 bg-gold/20 text-gold cursor-default'
-                              : 'border-lacquer bg-lacquer text-cream hover:brightness-90'
-                          }`}
-                        >
-                          <Sparkles className="w-3.5 h-3.5" />
-                          <span>
-                            {isCurrent
-                              ? t.auth.activeAccountBadge
-                              : t.auth.useAccountCta}
-                          </span>
-                        </button>
-                      </div>
                     </div>
                   );
                 })}
+              </div>
+
+              <div className="pt-2">
+                <Button
+                  variant="ghost"
+                  onClick={() => navigate('/')}
+                  className="w-full"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Compass className="w-4 h-4 text-gold" />
+                    <span>{t.nav.explore}</span>
+                  </span>
+                </Button>
               </div>
             </div>
           </aside>

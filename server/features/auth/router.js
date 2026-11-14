@@ -25,7 +25,7 @@ function getInitials(fullName) {
     .trim()
     .split(/\s+/)
     .filter(Boolean);
-  if (parts.length === 0) return 'SV';
+  if (parts.length === 0) return 'HL';
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
 }
@@ -80,54 +80,8 @@ function verifyToken(token) {
   }
 }
 
-// Khởi tạo danh sách tài khoản thành viên mẫu & kho lưu trữ người dùng trong phiên chạy
 const usersByEmail = new Map();
 const usersById = new Map();
-
-function seedDefaultUsers() {
-  const defaultPasswordHash = hashPassword('hoalang2026');
-  const seeds = [
-    {
-      id: 'user-tv1-lead',
-      fullName: 'Thành Trung (TV1)',
-      email: 'tv1@soulvillage.vn',
-      role: 'tv1_lead',
-      title: 'Trưởng Nhóm · Kiến Trúc Sư Di Sản',
-      bio: 'Phụ trách tích hợp hệ thống, kiến trúc HoaLang UI, trang Khám phá & Chi tiết và triển khai Google Cloud Run.',
-      joinedAt: '2026-11-14T08:00:00.000Z',
-    },
-    {
-      id: 'user-tv2-gemini',
-      fullName: 'Thành Viên 02 (TV2)',
-      email: 'tv2@soulvillage.vn',
-      role: 'tv2_ai',
-      title: 'Điều Phối Hành Trình Gemini AI',
-      bio: 'Phụ trách thuật toán cá nhân hóa hành trình di sản với Google Gemini 2.5 Flash và cơ chế dự phòng minh bạch.',
-      joinedAt: '2026-11-14T08:05:00.000Z',
-    },
-    {
-      id: 'user-tv3-curator',
-      fullName: 'Thành Viên 03 (TV3)',
-      email: 'tv3@soulvillage.vn',
-      role: 'tv3_curator',
-      title: 'Học Giả Văn Hóa & Hộ Chiếu Di Sản',
-      bio: 'Phụ trách biên khảo danh mục làng nghề truyền thống Huế, hệ thống thử thách Quiz và ấn triện di sản.',
-      joinedAt: '2026-11-14T08:10:00.000Z',
-    },
-  ];
-
-  for (const seed of seeds) {
-    const record = {
-      ...seed,
-      avatarInitials: getInitials(seed.fullName),
-      passwordHash: defaultPasswordHash,
-    };
-    usersByEmail.set(record.email.toLowerCase(), record);
-    usersById.set(record.id, record);
-  }
-}
-
-seedDefaultUsers();
 
 function toPublicUser(record) {
   return {
@@ -152,16 +106,6 @@ function extractBearerToken(req) {
 
 export function createAuthRouter() {
   const router = express.Router();
-
-  // GET /api/auth/demo-accounts — Trả danh sách tài khoản mẫu để chuyển đổi nhanh trong lúc demo
-  router.get('/demo-accounts', (_req, res) => {
-    const demoUsers = ['tv1@soulvillage.vn', 'tv2@soulvillage.vn', 'tv3@soulvillage.vn']
-      .map((email) => usersByEmail.get(email))
-      .filter(Boolean)
-      .map((u) => toPublicUser(u));
-
-    res.status(200).json({ accounts: demoUsers });
-  });
 
   // POST /api/auth/register — Đăng ký tài khoản mới
   router.post('/register', (req, res) => {
@@ -208,15 +152,13 @@ export function createAuthRouter() {
       });
     }
 
-    const allowedRoles = ['tv1_lead', 'tv2_ai', 'tv3_curator', 'visitor', 'artisan', 'scholar'];
+    const allowedRoles = ['visitor', 'artisan', 'scholar', 'collector'];
     const resolvedRole = allowedRoles.includes(role) ? role : 'visitor';
     const defaultTitles = {
-      tv1_lead: 'Trưởng Nhóm · Kiến Trúc Sư Di Sản',
-      tv2_ai: 'Điều Phối Hành Trình Gemini AI',
-      tv3_curator: 'Học Giả Văn Hóa & Hộ Chiếu Di Sản',
       visitor: 'Lữ Khách Văn Hóa Cố Đô',
       artisan: 'Nghệ Nhân Làng Nghề Truyền Thống',
-      scholar: 'Nhà Nghiên Cứu Di Sản Huế',
+      scholar: 'Học Giả Nghiên Cứu Di Sản',
+      collector: 'Nhà Sưu Tầm Thủ Công Mỹ Nghệ',
     };
 
     const resolvedTitle =
@@ -231,7 +173,7 @@ export function createAuthRouter() {
       role: resolvedRole,
       title: resolvedTitle,
       avatarInitials: getInitials(cleanName),
-      bio: 'Thành viên cộng đồng gìn giữ và du khảo bản đồ văn hóa sống Hồn Làng (SoulVillage × HoaLang).',
+      bio: 'Thành viên yêu mến và đồng hành gìn giữ bản đồ văn hóa sống Hồn Làng.',
       joinedAt: new Date().toISOString(),
       passwordHash: hashPassword(rawPassword),
     };

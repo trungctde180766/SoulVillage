@@ -1,4 +1,4 @@
-export type CulturalMemberRole = 'tv1_lead' | 'tv2_ai' | 'tv3_curator' | 'visitor' | 'artisan' | 'scholar';
+export type CulturalMemberRole = 'visitor' | 'artisan' | 'scholar' | 'collector';
 
 export interface AuthUser {
   id: string;

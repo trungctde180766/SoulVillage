@@ -3,7 +3,8 @@ dist
 .git
 .env
 .env.local
-.env.*.local
+.env.*
+!.env.example
 *.local
 npm-debug.log*
 Dockerfile

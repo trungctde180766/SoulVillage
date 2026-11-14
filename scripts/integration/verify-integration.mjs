@@ -36,40 +36,42 @@ async function runIntegrationChecks() {
     assert.equal(healthBody.status, 'ok');
     console.log('✓ GET /api/health -> 200 OK');
 
-    // 2. /api/auth/login (Demo TV1) -> 200
+    // 2. /api/auth/register -> 201
+    const testEmail = `lukhach.${Date.now()}@soulvillage.vn`;
+    const regRes = await fetch(`${BASE_URL}/api/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fullName: 'Nguyễn Phúc Minh Quân',
+        email: testEmail,
+        password: 'password123',
+        role: 'visitor',
+      }),
+    });
+    assert.equal(regRes.status, 201, 'Expected POST /api/auth/register to return 201');
+    const regBody = await regRes.json();
+    assert.ok(regBody.token, 'Expected signed auth token on register');
+    console.log('✓ POST /api/auth/register -> 201 Created');
+
+    // 3. /api/auth/login -> 200
     const loginRes = await fetch(`${BASE_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: 'tv1@soulvillage.vn', password: 'hoalang2026' }),
+      body: JSON.stringify({ email: testEmail, password: 'password123' }),
     });
     assert.equal(loginRes.status, 200, 'Expected POST /api/auth/login to return 200');
     const loginBody = await loginRes.json();
-    assert.ok(loginBody.token, 'Expected signed auth token');
-    assert.equal(loginBody.user.role, 'tv1_lead');
-    console.log('✓ POST /api/auth/login (TV1) -> 200 OK');
+    assert.ok(loginBody.token, 'Expected signed auth token on login');
+    console.log('✓ POST /api/auth/login -> 200 OK');
 
-    // 3. /api/auth/me -> 200
+    // 4. /api/auth/me -> 200
     const meRes = await fetch(`${BASE_URL}/api/auth/me`, {
       headers: { Authorization: `Bearer ${loginBody.token}` },
     });
     assert.equal(meRes.status, 200, 'Expected GET /api/auth/me to return 200');
     console.log('✓ GET /api/auth/me -> 200 OK');
 
-    // 4. /api/auth/register -> 201
-    const regRes = await fetch(`${BASE_URL}/api/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        fullName: 'Nguyễn Phúc Lữ Khách',
-        email: `visitor.${Date.now()}@soulvillage.vn`,
-        password: 'password123',
-        role: 'visitor',
-      }),
-    });
-    assert.equal(regRes.status, 201, 'Expected POST /api/auth/register to return 201');
-    console.log('✓ POST /api/auth/register -> 201 Created');
-
-    // 5. /api/places -> 200 (after TV3 merge) or 501 (starter stub before TV3 merge)
+    // 5. /api/places -> 200 or 501
     const placesRes = await fetch(`${BASE_URL}/api/places`);
     assert.ok(
       placesRes.status === 200 || placesRes.status === 501,
@@ -77,7 +79,7 @@ async function runIntegrationChecks() {
     );
     console.log(`✓ GET /api/places -> ${placesRes.status}`);
 
-    // 6. POST /api/itinerary with empty body -> 400 (after TV2 merge) or 501 (starter stub before TV2 merge)
+    // 6. POST /api/itinerary with empty body -> 400 or 501
     const itineraryRes = await fetch(`${BASE_URL}/api/itinerary`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -115,7 +117,7 @@ async function runIntegrationChecks() {
     assert.ok(spaHtml.includes('<div id="root"></div>'), 'Expected index.html root div');
     console.log('✓ GET / (SPA Fallback) -> 200 HTML');
 
-    console.log('\nAll TV1 integration & authentication checks passed!');
+    console.log('\nAll integration & authentication checks passed!');
   } finally {
     serverProcess.kill();
   }

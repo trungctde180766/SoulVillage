@@ -61,3 +61,19 @@ Tài liệu này ghi nhận mọi thay đổi về UI components, styling, Desig
      - **Hồ sơ đang đăng nhập (Active Identity Dossier):** Thẻ Ấn Triện Định Danh hiển thị rõ ai đang thao tác, mã thành viên, ngày gia nhập và biểu mẫu chỉnh sửa trực tiếp Họ tên / Danh hiệu / Tiểu sử.
      - **Chuyển nhanh danh tính 1 chạm (Demo Switcher):** Cho phép chuyển tức thì giữa **TV1 (Trưởng nhóm)**, **TV2 (Gemini AI)** và **TV3 (Hộ chiếu & Dữ liệu)**.
   3. Cập nhật `src/components/layout/Navbar.tsx` hiển thị trực tiếp **Ấn Triện + Họ Tên + Danh Hiệu** của người đang đăng nhập ngay trên thanh điều hướng (cả Desktop và Mobile) kèm nút Đăng xuất nhanh.
+
+---
+
+## [2026-11-14T10:32:00+07:00] Tinh gọn giao diện Đăng nhập / Đăng ký (Loại bỏ hoàn toàn nhãn nội bộ TV1/TV2/TV3 & Demo Hackathon)
+
+- **Tác vụ hoàn thành:**
+  1. Xóa toàn bộ danh sách tài khoản mẫu nội bộ (`TV1`, `TV2`, `TV3`, `Demo Hackathon`) khỏi `AuthPage.tsx`, `src/lib/auth.ts`, `src/types/auth.ts`, `server/features/auth/router.js` và `messages/*.json`.
+  2. Giữ 4 danh xưng văn hóa thuần túy dành cho người dùng thật: **Lữ Khách Văn Hóa Cố Đô**, **Nghệ Nhân Làng Nghề Truyền Thống**, **Học Giả Nghiên Cứu Di Sản** và **Nhà Sưu Tầm Thủ Công Mỹ Nghệ**.
+  3. Thay thế cột bên phải trang Đăng nhập/Đăng ký bằng khối **Đặc Quyền Thành Viên Hồn Làng** mang phong cách tạp chí nghệ thuật sang trọng.
+
+## [2026-11-14] Kiểm tra UI và sửa điều hướng trước triển khai Cloud Run
+
+- Sửa navbar bị cắt menu ở mobile 360px; xác minh cả VI và EN trên trình duyệt.
+- Chuẩn hóa liên kết trực tiếp trước khi mount HashRouter, sửa lỗi URL hành trình nhưng hiển thị trang Khám phá; giữ nguyên query `placeId`.
+- Ghi đánh giá và các giới hạn chức năng trong `docs/UI_FUNCTIONAL_REVIEW.md`.
+- Build, lint, kiểm tra cú pháp server và script kiểm tra tích hợp đều qua. Bộ kiểm tra vẫn chấp nhận các API placeholder HTTP 501.

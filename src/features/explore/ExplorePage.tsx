@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Clock, Compass, MapPin, Sparkles } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, Clock, MapPin, Sparkles } from 'lucide-react';
 import type { CulturalCategory, CulturalPlace } from '../../types/place';
 import { fetchCulturalPlaces } from '../../services/api';
 import { useLocale, useTranslations } from '../../lib/i18n';
 import {
-  AnimatedNumber,
   Button,
   OrnamentDivider,
   SectionLabel,
@@ -13,6 +12,7 @@ import {
   VillageCard,
 } from '../../components/shared';
 import { FilterBar } from './FilterBar';
+import { HomeIntro, HomeOutro } from './HomeEditorial';
 
 const FALLBACK_HERO_IMAGE =
   'https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=1400&q=80';
@@ -85,92 +85,30 @@ export const ExplorePage: React.FC = () => {
   };
 
   const scrollToCatalog = () => {
-    catalogSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+    catalogSectionRef.current?.focus({ preventScroll: true });
+    catalogSectionRef.current?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   };
 
   const featuredPlace = places.length > 0 ? places[0] : null;
   const remainingPlaces = places.length > 1 ? places.slice(1) : [];
 
   return (
-    <div className="min-h-screen bg-parchment text-ink">
-      {/* 1. Editorial Hero Section (Charcoal dark section — Navbar overlays transparently at top) */}
-      <section className="relative bg-charcoal text-cream pt-28 pb-16 sm:pt-36 sm:pb-24 border-b border-stone/30 overflow-hidden">
-        {/* Giant background decorative watermark */}
-        <span
-          aria-hidden="true"
-          className="hidden lg:block absolute -right-6 bottom-0 font-display text-[180px] leading-none font-light text-cream/[0.03] select-none pointer-events-none"
-        >
-          HOALANG
-        </span>
-
-        <div className="max-w-content mx-auto px-5 sm:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-end">
-            <div className="lg:col-span-8 space-y-6 animate-fade-up">
-              <SectionLabel>{t.explore.heroLabel}</SectionLabel>
-              <h1 className="font-display text-display-2xl text-cream tracking-tight">
-                {t.explore.heroTitle}
-              </h1>
-              <p className="font-body text-body-lg text-cream/80 max-w-2xl">
-                {t.explore.heroSubtitle}
-              </p>
-
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Button variant="primary" onClick={scrollToCatalog}>
-                  <span className="inline-flex items-center gap-2">
-                    <Compass className="w-4 h-4" />
-                    <span>{t.explore.heroPrimaryCta}</span>
-                  </span>
-                </Button>
-                <Button variant="ghost-dark" onClick={() => navigate('/journey')}>
-                  <span className="inline-flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-gold" />
-                    <span>{t.explore.heroSecondaryCta}</span>
-                  </span>
-                </Button>
-              </div>
-            </div>
-
-            {/* Asymmetric Editorial Stats Panel (4 cols) */}
-            <div className="lg:col-span-4 bg-parchment/[0.05] border border-stone/25 rounded-sm p-6 sm:p-8 space-y-5">
-              <div className="flex items-baseline justify-between border-b border-stone/20 pb-4">
-                <span className="font-body text-label-sm uppercase text-gold">
-                  {t.explore.stats.villagesLabel}
-                </span>
-                <span className="font-display text-4xl text-cream">
-                  <AnimatedNumber value={places.length || 8} />
-                </span>
-              </div>
-              <div className="flex items-baseline justify-between border-b border-stone/20 pb-4">
-                <span className="font-body text-label-sm uppercase text-gold">
-                  {t.explore.stats.centuriesLabel}
-                </span>
-                <span className="font-display text-3xl text-cream">
-                  {t.explore.stats.centuriesValue}
-                </span>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="font-body text-label-sm uppercase text-gold">
-                  {t.explore.stats.curatedLabel}
-                </span>
-                <span className="font-display text-3xl text-gold">
-                  {t.explore.stats.curatedValue}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="hl-home min-h-screen bg-parchment text-ink">
+      <HomeIntro onExplore={scrollToCatalog} />
 
       {/* 2. Section Chẵn: Filter & Search Panel (bg-cream with 1px solid stone border) */}
       <section
         ref={catalogSectionRef}
-        className="bg-cream border-b border-stone py-10 sm:py-12"
+        id="heritage-collection"
+        tabIndex={-1}
+        aria-labelledby="home-catalog-title"
+        className="hl-catalog bg-parchment border-b border-stone pt-16 pb-10 sm:pt-24 sm:pb-12"
       >
         <div className="max-w-content mx-auto px-5 sm:px-10 space-y-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="space-y-2">
               <SectionLabel>{t.explore.sectionLabel}</SectionLabel>
-              <h2 className="font-display text-display-xl text-charcoal">
+              <h2 id="home-catalog-title" className="hl-title text-charcoal">
                 {t.explore.title}
               </h2>
             </div>
@@ -242,11 +180,10 @@ export const ExplorePage: React.FC = () => {
               {/* ASYMMETRIC FEATURED SPOTLIGHT (2fr / 1fr -> 7 cols image + 5 cols dossier on lg) */}
               {featuredPlace && (
                 <article
-                  onClick={() => handleOpenDetail(featuredPlace)}
-                  className="group relative grid grid-cols-1 lg:grid-cols-12 bg-cream border border-stone rounded-sm overflow-hidden cursor-pointer transition-transform transition-shadow duration-300 ease-out-expo hover:-translate-y-[5px] hover:shadow-hover animate-fade-up"
+                  className="group relative grid grid-cols-1 lg:grid-cols-12 bg-cream border border-stone rounded-sm overflow-hidden transition-transform transition-shadow duration-300 ease-out-expo hover:-translate-y-[5px] hover:shadow-hover animate-fade-up"
                 >
                   {/* Featured Image Column (7/12 on desktop, 4/3 on mobile) */}
-                  <div className="lg:col-span-7 relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto lg:min-h-[420px] overflow-hidden bg-parchment border-b lg:border-b-0 lg:border-r border-stone">
+                  <Link to={`/places/${featuredPlace.id}`} className="lg:col-span-7 relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto lg:min-h-[420px] overflow-hidden bg-parchment border-b lg:border-b-0 lg:border-r border-stone">
                     <img
                       src={featuredPlace.imageUrl || FALLBACK_HERO_IMAGE}
                       alt={
@@ -264,7 +201,7 @@ export const ExplorePage: React.FC = () => {
                         {t.explore.featuredBadge}
                       </TagBadge>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Featured Editorial Narrative Column (5/12 on desktop) */}
                   <div className="lg:col-span-5 relative p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6">
@@ -293,9 +230,9 @@ export const ExplorePage: React.FC = () => {
 
                       <div className="space-y-1.5">
                         <h3 className="font-display text-display-md text-charcoal group-hover:text-lacquer transition-colors duration-300">
-                          {locale === 'en'
+                          <Link to={`/places/${featuredPlace.id}`}>{locale === 'en'
                             ? featuredPlace.name
-                            : featuredPlace.vietnameseName}
+                            : featuredPlace.vietnameseName}</Link>
                         </h3>
                         <p className="font-body text-caption italic text-bronze">
                           {locale === 'en'
@@ -324,10 +261,10 @@ export const ExplorePage: React.FC = () => {
                     </div>
 
                     <div className="relative pt-4 border-t border-stone/60 flex flex-wrap items-center justify-between gap-3">
-                      <span className="inline-flex items-center gap-2 font-body text-[12px] font-semibold uppercase tracking-[0.12em] text-lacquer group-hover:translate-x-1 transition-transform duration-300">
+                      <Link to={`/places/${featuredPlace.id}`} className="inline-flex items-center min-h-[44px] gap-2 font-body text-[12px] font-semibold uppercase tracking-[0.12em] text-lacquer group-hover:translate-x-1 transition-transform duration-300">
                         <span>{t.explore.readStoryCta}</span>
                         <ArrowRight className="w-4 h-4" />
-                      </span>
+                      </Link>
 
                       <button
                         type="button"
@@ -372,30 +309,7 @@ export const ExplorePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Accent Editorial Callout Section (bg-cream with lacquer/gold editorial accent) */}
-      <section className="bg-cream border-t border-stone py-16 sm:py-20">
-        <div className="max-w-content mx-auto px-5 sm:px-10">
-          <div className="bg-parchment border border-stone rounded-sm p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-3">
-              <SectionLabel>{t.explore.editorialBannerLabel}</SectionLabel>
-              <h2 className="font-display text-display-lg text-charcoal">
-                {t.explore.editorialBannerTitle}
-              </h2>
-              <p className="font-body text-body-md text-ink/80 max-w-2xl">
-                {t.explore.editorialBannerDesc}
-              </p>
-            </div>
-            <div className="lg:col-span-4 flex lg:justify-end">
-              <Button variant="primary" onClick={() => navigate('/journey')}>
-                <span className="inline-flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
-                  <span>{t.explore.editorialBannerCta}</span>
-                </span>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeOutro onExplore={scrollToCatalog} />
     </div>
   );
 };
