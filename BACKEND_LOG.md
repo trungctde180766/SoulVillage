@@ -40,3 +40,22 @@ Tài liệu này ghi nhận mọi thay đổi về server Express, router module
      - `PUT /api/auth/profile`: Cập nhật họ tên, danh hiệu văn hóa và tiểu sử.
      - `POST /api/auth/logout` & `GET /api/auth/demo-accounts`: Hỗ trợ đăng xuất và danh sách tài khoản mẫu cho 3 thành viên (`tv1@soulvillage.vn`, `tv2@soulvillage.vn`, `tv3@soulvillage.vn`).
   2. Mount `app.use('/api/auth', createAuthRouter())` trong `server.js` và bổ sung kịch bản kiểm thử tự động vào `scripts/integration/verify-integration.mjs`.
+
+
+---
+
+## [2026-11-14T10:35:00+07:00] Hoàn thiện Module Backend Lập Hành Trình Văn Hóa AI (`server/features/journey/`)
+
+- **Người thực hiện:** TV2 (Gemini & Cultural Journey — nhánh `NHANH_TV2`)
+- **Tác vụ hoàn thành:**
+  1. Xây dựng bộ kiểm định dữ liệu nghiêm ngặt `server/features/journey/validator.js`:
+     - Kiểm tra quỹ thời gian `durationHours` (2–8h), danh mục `interests`, `pace`, `companion`, và danh sách `selectedPlaceIds` (tối đa 3 ID).
+     - Guardrails bảo vệ schema đầu ra: bóc tách JSON chuẩn kể cả khi có markdown block, bẫy ảo giác (`hallucinated placeId`), đảm bảo không trùng khung giờ (`timeSlot`) và không vượt tổng thời gian. Bắt buộc ghi đè `placeName` từ catalog gốc.
+  2. Xây dựng dịch vụ gọi Gemini v3 & Engine Fallback cục bộ `server/features/journey/service.js`:
+     - Tích hợp `@google/genai` gọi model `gemini-4-hydrogen` (kèm dự phòng `gemini-3.5-flash-lite`), timeout 20s, cấu hình JSON Mode và low thinking budget.
+     - Thuật toán Deterministic Fallback: Tự động gom địa điểm theo điểm ưu tiên `selectedPlaceIds` hoặc độ khớp danh mục `interests`, xếp lịch greedy pack kèm 15 phút đệm di chuyển giữa các chặng dừng. Đảm bảo luôn trả HTTP 200 (`isFallback: true`) khi không có API key, mạng rớt, hoặc quota 429.
+  3. Cập nhật `server/features/journey/router.js` và `server/features/journey/index.js`:
+     - Cung cấp `createJourneyRouter({ getPlaces })` khớp hợp đồng `POST /api/itinerary`. Trả HTTP 400 nếu dữ liệu sai định dạng, HTTP 503 nếu catalog rỗng hoặc thiếu API key, HTTP 200 trả trực tiếp `JourneyItinerary`.
+  4. Bộ kiểm thử tự động `server/features/journey/test/journey.test.js`:
+     - 18 unit tests bao quát 100% kịch bản lỗi, biên, guardrails, fallback và router. 100% pass với `node:test`.
+     - Đã kiểm thử live thành công với Gemini API key thật từ `.env.local` (trả về kết quả trong ~3.5s).
