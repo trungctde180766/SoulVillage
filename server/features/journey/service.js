@@ -158,12 +158,15 @@ export async function defaultCallGeminiText({
       ]
     : FALLBACK_GEMINI_MODELS;
 
+  // One deadline for the whole chain: per-model timeouts would let 3 models take up to 60s.
+  const deadline = AbortSignal.timeout(timeoutMs);
   let lastErr;
   for (const model of candidateModels) {
+    if (deadline.aborted) break;
     const config = {
       responseMimeType: 'application/json',
       responseJsonSchema: ITINERARY_RESPONSE_JSON_SCHEMA,
-      abortSignal: AbortSignal.timeout(timeoutMs),
+      abortSignal: deadline,
     };
 
     if (model.startsWith('gemini-4') || model.startsWith('gemini-3.5')) {

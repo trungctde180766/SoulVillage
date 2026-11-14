@@ -34,13 +34,27 @@ function normalizeErrorCode(rawCode?: string): JourneyErrorCode {
   return 'UNKNOWN_ERROR';
 }
 
+/** Server caps the Gemini chain at 20s, then answers with the local fallback; leave headroom. */
+export const CLIENT_TIMEOUT_MS = 25_000;
+
 /**
  * Gửi yêu cầu khởi tạo hành trình văn hóa cá nhân hóa tới POST /api/itinerary (Contract v1 — TV2).
+ * Caller aborts rethrow the AbortError; the client-side timeout surfaces as NETWORK_ERROR.
  */
 export async function generateAIJourney(
   preference: JourneyPreference,
   signal?: AbortSignal,
 ): Promise<JourneyItinerary> {
+  const controller = new AbortController();
+  let timedOut = false;
+  const timer = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, CLIENT_TIMEOUT_MS);
+  const forwardAbort = () => controller.abort();
+  if (signal?.aborted) controller.abort();
+  signal?.addEventListener('abort', forwardAbort, { once: true });
+
   let response: Response;
   try {
     response = await fetch('/api/itinerary', {
@@ -49,9 +63,16 @@ export async function generateAIJourney(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(preference),
-      signal,
+      signal: controller.signal,
     });
   } catch (err) {
+    if (timedOut) {
+      throw new JourneyApiError(
+        'Máy chủ phản hồi quá lâu. Vui lòng thử lại sau giây lát.',
+        'NETWORK_ERROR',
+        0,
+      );
+    }
     if (err instanceof DOMException && err.name === 'AbortError') {
       throw err;
     }
@@ -60,6 +81,9 @@ export async function generateAIJourney(
       'NETWORK_ERROR',
       0,
     );
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener('abort', forwardAbort);
   }
 
   let payload: unknown = null;
